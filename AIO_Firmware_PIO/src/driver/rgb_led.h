@@ -47,15 +47,15 @@ struct RgbConfig
     int8_t step_0;
     int8_t step_1;
     int8_t step_2;
-    uint16_t min_brightness; // 亮度值 0~1000
-    uint16_t max_brightness; // 亮度值 0~1000
-    uint8_t brightness_step; // 亮度值 0~100
-    int time;                // 定时器的时间 10~1000
+    uint16_t min_brightness; // Brightness value 0~1000
+    uint16_t max_brightness; // Brightness value 0~1000
+    uint8_t brightness_step; // Brightness value 0~100
+    int time;                // Timer time 10~1000
 };
 
 struct RgbParam
 {
-    uint8_t mode; // 0为RGB色彩(LED_MODE_RGB) 1为HSV色彩(LED_MODE_HSV)
+    uint8_t mode; // 0 for RGB color (LED_MODE_RGB) 1 for HSV color (LED_MODE_HSV)
     union
     {
         uint8_t min_value_r;
@@ -104,11 +104,11 @@ struct RgbParam
         int8_t step_v;
     };
 
-    uint16_t min_brightness; // 亮度值 0~1000
-    uint16_t max_brightness; // 亮度值 0~1000
-    uint8_t brightness_step; // 亮度值 0~100
+    uint16_t min_brightness; // Brightness value 0~1000
+    uint16_t max_brightness; // Brightness value 0~1000
+    uint8_t brightness_step; // Brightness value 0~100
 
-    int time; // 定时器的时间
+    int time; // Timer time
 };
 
 struct RgbRunStatus
@@ -129,7 +129,7 @@ struct RgbRunStatus
         uint8_t current_v;
     };
     uint8_t pos;
-    uint16_t current_brightness; // 亮度值 0~1000
+    uint16_t current_brightness; // Brightness value 0~1000
 };
 
 bool set_rgb_and_run(RgbParam *rgb_setting,

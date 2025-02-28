@@ -12,7 +12,7 @@ extern "C"
 
 #define ANIEND_WAIT                 \
     while (lv_anim_count_running()) \
-        lv_task_handler(); // 等待动画完成
+        lv_task_handler(); // Wait for animation to complete
 
 // #define ANIEND_WAIT                      \
 //     while (lv_anim_count_running());

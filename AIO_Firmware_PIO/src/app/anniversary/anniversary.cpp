@@ -10,13 +10,13 @@
 
 bool tmfromString(const char *date_str, struct tm *date);
 
-// 纪念日的持久化配置
+// Persistent configuration for anniversaries
 #define ANNIVERSARY_CONFIG_PATH "/anniversary.cfg"
 struct AN_Config
 {
-    unsigned long anniversary_cnt;              // 事件个数
-    String event_name[MAX_ANNIVERSARY_CNT];     // 事件名称
-    struct tm target_date[MAX_ANNIVERSARY_CNT]; // 目标日
+    unsigned long anniversary_cnt;              // Number of events
+    String event_name[MAX_ANNIVERSARY_CNT];     // Event names
+    struct tm target_date[MAX_ANNIVERSARY_CNT]; // Target dates
     struct tm current_date;
 };
 
@@ -25,7 +25,7 @@ static long long get_timestamp(String url);
 static void write_config(AN_Config *cfg)
 {
     char tmp[16];
-    // 将配置数据保存在文件中（持久化）
+    // Save configuration data to file (persistent)
     String w_data;
     memset(tmp, 0, 16);
     snprintf(tmp, 16, "%lu\n", cfg->anniversary_cnt);
@@ -45,21 +45,21 @@ static void write_config(AN_Config *cfg)
 
 static void read_config(AN_Config *cfg)
 {
-    // 如果有需要持久化配置文件 可以调用此函数将数据存在flash中
-    // 配置文件名最好以APP名为开头 以".cfg"结尾，以免多个APP读取混乱
+    // If persistent configuration file is needed, call this function to save data to flash
+    // The configuration file name should start with the APP name and end with ".cfg" to avoid confusion with multiple APPs reading
     char info[128] = {0};
     uint16_t size = g_flashCfg.readFile(ANNIVERSARY_CONFIG_PATH, (uint8_t *)info);
     Serial.printf("size %d\n", size);
     info[size] = 0;
     if (size == 0)
     {
-        // 默认值
+        // Default values
         cfg->anniversary_cnt = 2;
-        cfg->event_name[0] = "生日还有";
-        cfg->target_date[0].tm_year = 0; // 设置为零则每年重复
+        cfg->event_name[0] = "Birthday in";
+        cfg->target_date[0].tm_year = 0; // Set to zero for annual repetition
         cfg->target_date[0].tm_mon = 1;
         cfg->target_date[0].tm_mday = 1;
-        cfg->event_name[1] = "毕业还有";
+        cfg->event_name[1] = "Graduation in";
         cfg->target_date[1].tm_year = 2025;
         cfg->target_date[1].tm_mon = 7;
         cfg->target_date[1].tm_mday = 4;
@@ -68,7 +68,7 @@ static void read_config(AN_Config *cfg)
     }
     else
     {
-        // 解析数据
+        // Parse data
         char *param[MAX_ANNIVERSARY_CNT * 2 + 2] = {0};
         analyseParam(info, MAX_ANNIVERSARY_CNT * 2 + 2, param);
         cfg->anniversary_cnt = atol(param[0]);
@@ -81,17 +81,17 @@ static void read_config(AN_Config *cfg)
     }
 }
 
-// 动态数据，APP的生命周期结束也需要释放它
+// Dynamic data, needs to be released when the APP lifecycle ends
 struct AnniversaryAppRunData
 {
-    int cur_anniversary; // 当前显示第几个纪念日
+    int cur_anniversary; // Currently displaying which anniversary
     int anniversary_day_count;
-    unsigned long preWeatherMillis; // 上一回更新天气时的毫秒数
-    unsigned long preTimeMillis;    // 更新时间计数器
-    long long preNetTimestamp;      // 上一次的网络时间戳
-    long long errorNetTimestamp;    // 网络到显示过程中的时间误差
-    long long preLocalTimestamp;    // 上一次的本地机器时间戳
-    unsigned int coactusUpdateFlag; // 强制更新标志
+    unsigned long preWeatherMillis; // Milliseconds of the last weather update
+    unsigned long preTimeMillis;    // Time update counter
+    long long preNetTimestamp;      // Last network timestamp
+    long long errorNetTimestamp;    // Time error between network and display
+    long long preLocalTimestamp;    // Last local machine timestamp
+    unsigned int coactusUpdateFlag; // Forced update flag
 };
 
 static AN_Config cfg_data;
@@ -123,7 +123,7 @@ bool tmfromString(const char *date_str, struct tm *date)
             }
             if (dots == 2)
             {
-                // Too much dots (there must be 3 dots)
+                // Too many dots (there must be 3 dots)
                 return false;
             }
             acc = 0;
@@ -216,7 +216,7 @@ static long long get_timestamp(String url)
             Serial.println(payload);
             int time_index = (payload.indexOf("data")) + 12;
             time = payload.substring(time_index, payload.length() - 3);
-            // 以网络时间戳为准
+            // Use network timestamp as the standard
             run_data->preNetTimestamp = atoll(time.c_str()) + run_data->errorNetTimestamp + TIMEZERO_OFFSIZE;
             run_data->preLocalTimestamp = GET_SYS_MILLIS();
         }
@@ -224,7 +224,7 @@ static long long get_timestamp(String url)
     else
     {
         Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
-        // 得不到网络时间戳时
+        // When network timestamp is not available
         run_data->preNetTimestamp = run_data->preNetTimestamp + (GET_SYS_MILLIS() - run_data->preLocalTimestamp);
         run_data->preLocalTimestamp = GET_SYS_MILLIS();
     }
@@ -236,14 +236,14 @@ static long long get_timestamp(String url)
 static int anniversary_init(AppController *sys)
 {
     anniversary_gui_init();
-    // 获取配置参数
+    // Get configuration parameters
     read_config(&cfg_data);
-    // 初始化运行时的参数
+    // Initialize runtime parameters
     run_data = (AnniversaryAppRunData *)calloc(1, sizeof(AnniversaryAppRunData));
     run_data->cur_anniversary = 0;
-    run_data->preNetTimestamp = 1577808000000; // 上一次的网络时间戳 初始化为2020-01-01 00:00:00
+    run_data->preNetTimestamp = 1577808000000; // Last network timestamp initialized to 2020-01-01 00:00:00
     run_data->errorNetTimestamp = 2;
-    run_data->preLocalTimestamp = GET_SYS_MILLIS(); // 上一次的本地机器时间戳
+    run_data->preLocalTimestamp = GET_SYS_MILLIS(); // Last local machine timestamp
     run_data->preWeatherMillis = 0;
     run_data->preTimeMillis = 0;
     run_data->coactusUpdateFlag = 0x01;
@@ -257,7 +257,7 @@ static void anniversary_process(AppController *sys,
     lv_scr_load_anim_t anim_type = LV_SCR_LOAD_ANIM_NONE;
     if (RETURN == act_info->active)
     {
-        sys->app_exit(); // 退出APP
+        sys->app_exit(); // Exit APP
         return;
     }
     else if (TURN_RIGHT == act_info->active)
@@ -272,9 +272,9 @@ static void anniversary_process(AppController *sys,
     }
     if (0x01 == run_data->coactusUpdateFlag || doDelayMillisTime(900000, &run_data->preTimeMillis, false))
     {
-        // 启动时先用持久化配置中的日期
+        // Use the date from the persistent configuration at startup
         run_data->anniversary_day_count = dateDiff(&(cfg_data.current_date), &(cfg_data.target_date[run_data->cur_anniversary]));
-        // 尝试同步网络上的时钟
+        // Try to synchronize the clock on the network
         sys->send_to(ANNIVERSARY_APP_NAME, CTRL_NAME,
                      APP_MESSAGE_WIFI_CONN, NULL, NULL);
         run_data->coactusUpdateFlag = 0x00;
@@ -292,27 +292,27 @@ static void anniversary_process(AppController *sys,
     // Serial.println(F(cfg_data.event_name[run_data->cur_anniversary].c_str()));
     display_anniversary("anniversary", anim_type, &(cfg_data.target_date[run_data->cur_anniversary]), run_data->anniversary_day_count, cfg_data.event_name[run_data->cur_anniversary].c_str());
     anniversary_gui_display_date(&(cfg_data.target_date[run_data->cur_anniversary]), run_data->anniversary_day_count, cfg_data.event_name[run_data->cur_anniversary].c_str());
-    // 发送请求。如果是wifi相关的消息，当请求完成后自动会调用 anniversary_message_handle 函数
+    // Send request. If it is a wifi-related message, the anniversary_message_handle function will be automatically called after the request is completed
     // sys->send_to(ANNIVERSARY_APP_NAME, CTRL_NAME,
     //              APP_MESSAGE_WIFI_CONN, (void *)run_data->val1, NULL);
 
-    // 程序需要时可以适当加延时
+    // Add delay if needed
     delay(300);
 }
 
 static void anniversary_background_task(AppController *sys,
                                         const ImuAction *act_info)
 {
-    // 本函数为后台任务，主控制器会间隔一分钟调用此函数
-    // 本函数尽量只调用"常驻数据",其他变量可能会因为生命周期的缘故已经释放
+    // This function is a background task, the main controller will call this function every minute
+    // This function should only call "resident data", other variables may have been released due to lifecycle reasons
 }
 
 static int anniversary_exit_callback(void *param)
 {
-    // 释放资源
+    // Release resources
     anniversary_gui_del();
 
-    // 释放运行数据
+    // Release runtime data
     if (NULL != run_data)
     {
         free(run_data);
@@ -325,7 +325,7 @@ static void anniversary_message_handle(const char *from, const char *to,
                                        APP_MESSAGE_TYPE type, void *message,
                                        void *ext_info)
 {
-    // 目前主要是wifi开关类事件（用于功耗控制）
+    // Mainly wifi switch events (for power control)
     switch (type)
     {
     case APP_MESSAGE_WIFI_CONN:
@@ -333,7 +333,7 @@ static void anniversary_message_handle(const char *from, const char *to,
         // todo
         Serial.print(F("ntp update.\n"));
 
-        long long timestamp = get_timestamp(TIME_API); // nowapi时间API
+        long long timestamp = get_timestamp(TIME_API); // nowapi time API
     }
     break;
     case APP_MESSAGE_WIFI_AP:
@@ -343,7 +343,7 @@ static void anniversary_message_handle(const char *from, const char *to,
     break;
     case APP_MESSAGE_WIFI_ALIVE:
     {
-        // wifi心跳维持的响应 可以不做任何处理
+        // Wifi heartbeat response, can do nothing
     }
     break;
     case APP_MESSAGE_READ_CFG:

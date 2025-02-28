@@ -11,20 +11,20 @@ IMU::IMU()
     action_info.isValid = false;
     action_info.active = ACTIVE_TYPE::UNKNOWN;
     action_info.long_time = true;
-    // 初始化数据
+    // Initialize data
     for (int pos = 0; pos < ACTION_HISTORY_BUF_LEN; ++pos)
     {
         // act_info_history.push_back(UNKNOWN);
         act_info_history[pos] = UNKNOWN;
     }
     act_info_history_ind = ACTION_HISTORY_BUF_LEN - 1;
-    this->order = 0; // 表示方位
+    this->order = 0; // Represents orientation
 }
 
 void IMU::init(uint8_t order, uint8_t auto_calibration,
                SysMpuConfig *mpu_cfg)
 {
-    this->setOrder(order); // 设置方向
+    this->setOrder(order); // Set direction
     Wire.begin(IMU_I2C_SDA, IMU_I2C_SCL);
     Wire.setClock(400000);
     unsigned long timeout = 5000;
@@ -45,7 +45,7 @@ void IMU::init(uint8_t order, uint8_t auto_calibration,
 
     if (auto_calibration == 0)
     {
-        // supply your own gyro offsets here, scaled for min sensitivity
+        // Supply your own gyro offsets here, scaled for min sensitivity
         mpu.setXGyroOffset(mpu_cfg->x_gyro_offset);
         mpu.setYGyroOffset(mpu_cfg->y_gyro_offset);
         mpu.setZGyroOffset(mpu_cfg->z_gyro_offset);
@@ -55,8 +55,8 @@ void IMU::init(uint8_t order, uint8_t auto_calibration,
     }
     else
     {
-        // 启动自动校准
-        // 7次循环自动校正
+        // Start auto calibration
+        // 7 cycles of auto calibration
         mpu.CalibrateAccel(7);
         mpu.CalibrateGyro(7);
         mpu.PrintActiveOffsets();
@@ -72,9 +72,9 @@ void IMU::init(uint8_t order, uint8_t auto_calibration,
     Serial.print(F("Initialization MPU6050 success.\n"));
 }
 
-void IMU::setOrder(uint8_t order) // 设置方向
+void IMU::setOrder(uint8_t order) // Set direction
 {
-    this->order = order; // 表示方位
+    this->order = order; // Represents orientation
 }
 
 bool IMU::Encoder_GetIsPush(void)
@@ -88,7 +88,7 @@ bool IMU::Encoder_GetIsPush(void)
 
 ImuAction *IMU::getAction(void)
 {
-    // 基本方法: 通过对近来的动作数据简单的分析，确定出动作的类型
+    // Basic method: Determine the type of action through simple analysis of incoming action data
     ImuAction tmp_info;
     getVirtureMotion6(&tmp_info);
 
@@ -97,7 +97,7 @@ ImuAction *IMU::getAction(void)
 
     tmp_info.active = ACTIVE_TYPE::UNKNOWN;
 
-    // 原先判断的只是加速度，现在要加上陀螺仪
+    // Previously only judged by acceleration, now add gyroscope
     if (ACTIVE_TYPE::UNKNOWN == tmp_info.active)
     {
         if (tmp_info.v_ay > 4000)
@@ -110,7 +110,7 @@ ImuAction *IMU::getAction(void)
         }
         else if (tmp_info.v_ay > 1000 || tmp_info.v_ay < -1000)
         {
-            // 震动检测
+            // Vibration detection
             tmp_info.active = ACTIVE_TYPE::SHAKE;
         }
     }
@@ -127,33 +127,33 @@ ImuAction *IMU::getAction(void)
         }
         else if (action_info.v_ax > 1000 || action_info.v_ax < -1000)
         {
-            // 震动检测
+            // Vibration detection
             tmp_info.active = ACTIVE_TYPE::SHAKE;
         }
     }
 
-    // 储存当前检测的动作数据到动作缓冲区中
+    // Store the currently detected action data into the action buffer
     act_info_history_ind = (act_info_history_ind + 1) % ACTION_HISTORY_BUF_LEN;
     int index = act_info_history_ind;
     act_info_history[index] = tmp_info.active;
 
-    // 本次流程的动作识别
+    // Action recognition for this process
     if (!action_info.isValid)
     {
-        bool isHoldDown = false; // 长按的标志位
-        // 本次流程的动作识别
+        bool isHoldDown = false; // Long press flag
+        // Action recognition for this process
         int second = (index + ACTION_HISTORY_BUF_LEN - 1) % ACTION_HISTORY_BUF_LEN;
         int third = (index + ACTION_HISTORY_BUF_LEN - 2) % ACTION_HISTORY_BUF_LEN;
-        // 先识别"短按" （注：不要写成else if）
+        // First recognize "short press" (Note: do not write as else if)
         if (ACTIVE_TYPE::UNKNOWN != tmp_info.active)
         {
             action_info.isValid = 1;
             action_info.active = tmp_info.active;
         }
-        // 识别"长按","长按"相对"短按"高级（所以键值升级放在短按之后）
+        // Recognize "long press", "long press" is relatively advanced compared to "short press" (so the key value upgrade is placed after the short press)
         if (act_info_history[index] == act_info_history[second] && act_info_history[second] == act_info_history[third])
         {
-            // 目前只识别前后的长按
+            // Currently only recognize the long press of forward and backward
             if (ACTIVE_TYPE::UP == tmp_info.active)
             {
                 isHoldDown = true;
@@ -166,11 +166,11 @@ ImuAction *IMU::getAction(void)
                 action_info.isValid = 1;
                 action_info.active = ACTIVE_TYPE::RETURN;
             }
-            // 如需左右的长按可在此处添加"else if"的逻辑
+            // If you need the long press of left and right, you can add the logic of "else if" here
 
             if (isHoldDown)
             {
-                // 本次识别为长按，则手动清除识别过的历史数据 避免对下次动作识别的影响
+                // If this recognition is a long press, manually clear the recognized historical data to avoid affecting the next action recognition
                 act_info_history[second] = ACTIVE_TYPE::UNKNOWN;
                 act_info_history[third] = ACTIVE_TYPE::UNKNOWN;
             }

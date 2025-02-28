@@ -14,7 +14,7 @@ extern char file_name_list[DIR_FILE_NUM][DIR_FILE_NAME_MAX_LEN];
 
 enum FILE_TYPE : unsigned char
 {
-    FILE_TYPE_UNKNOW = 0,
+    FILE_TYPE_UNKNOWN = 0,
     FILE_TYPE_FILE,
     FILE_TYPE_FOLDER
 };
@@ -23,8 +23,8 @@ struct File_Info
 {
     char *file_name;
     FILE_TYPE file_type;
-    File_Info *front_node; // 上一个节点
-    File_Info *next_node;  // 下一个节点
+    File_Info *front_node; // Previous node
+    File_Info *next_node;  // Next node
 };
 
 void release_file_info(File_Info *info);

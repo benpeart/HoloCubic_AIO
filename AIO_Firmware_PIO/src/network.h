@@ -1,14 +1,14 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 
-// 时区偏移(小时) 8*60*60
+// Timezone offset (hours) 8*60*60
 #define TIMEZERO_OFFSIZE (28800000)
 
 #define CONN_SUCC 0
 #define CONN_ERROR 1
-#define CONN_ERR_TIMEOUT 15 // 连接WiFi的超时时间（s）
+#define CONN_ERR_TIMEOUT 15 // WiFi connection timeout (s)
 
-// wifi是否连接标志
+// WiFi connection flag
 #define AP_DISABLE 0
 #define AP_ENABLE 1
 
@@ -22,7 +22,7 @@
 #include <ESP8266mDNS.h>
 #else
 #include <WiFi.h>      // Built-in
-#include <WiFiMulti.h> // 当我们需要使用ESP8266开发板存储多个WiFi网络连接信息时，可以使用ESP8266WiFiMulti库来实现。
+#include <WiFiMulti.h> // When we need to store multiple WiFi network connection information on the ESP8266 board, we can use the ESP8266WiFiMulti library to achieve this.
 #include <WebServer.h> // https://github.com/Pedroalbuquerque/ESP32WebServer download and place in your Libraries folder
 #include <ESPmDNS.h>
 #include <HTTPClient.h>
@@ -44,14 +44,14 @@ extern IPAddress gateway;  // Set your network Gateway usually your Router base 
 extern IPAddress subnet;   // Set your network sub-network mask here
 extern IPAddress dns;      // Set your network DNS usually your Router base address
 
-extern const char *AP_SSID; //热点名称
+extern const char *AP_SSID; // Hotspot name
 
 void restCallback(TimerHandle_t xTimer);
 
 class Network
 {
 private:
-    unsigned long m_preDisWifiConnInfoMillis; // 保存上一回显示连接状态的时间戳
+    unsigned long m_preDisWifiConnInfoMillis; // Save the timestamp of the last display connection status
 
 public:
     Network();

@@ -65,7 +65,7 @@ class SettingsMsg
 {
 public:
     MsgHead m_msg_head;
-    // 以下数据直接使用空格隔开
+    // The following data is directly separated by spaces
     char m_prefs_name[15];
     char m_key[16];
     VALUE_TYPE m_value_type;
@@ -109,7 +109,7 @@ class DirList
 public:
     FileSystem m_file_system;
     char m_dir_path[99];
-    char m_dir_info[400];   // 用来承载子文件的文件名 多个文件名之间使用\t分隔
+    char m_dir_info[400];   // Used to carry the file names of sub-files, multiple file names are separated by \t
 
 public:
     DirList(const char *dir_path = NULL, const char *dir_info = NULL);

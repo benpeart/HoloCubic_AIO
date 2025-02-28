@@ -3,61 +3,60 @@
 #include "eye.h"
 
 /*
-功能：眼珠子
-操作说明：左/右切换眼睛样式
-其他：
-参考了https://learn.adafruit.com/animated-electronic-eyes/software
-以及AIO_FIRMWARE_PIO/lib/TFT_eSPI/examples/Generic/Animated_Eyes_1
-没有用爆改车间主任，因为其没有开源。
+Function: Eye animation
+Instructions: Left/Right to switch eye styles
+Others:
+Referenced from https://learn.adafruit.com/animated-electronic-eyes/software
+and AIO_FIRMWARE_PIO/lib/TFT_eSPI/examples/Generic/Animated_Eyes_1
+Did not use the modified version as it is not open source.
 
-编译说明：eye.h中有一个mode_eye宏
-当EYE_MIN为0，以下模式全部使能，有四种虹膜效果
-为1时，只有一种虹膜效果，只生效0，1，2 能大大减小内存内存占用
-00：小 default
-01：大 default
-02：双 default
+Compilation instructions: There is a mode_eye macro in eye.h
+When EYE_MIN is 0, all modes are enabled, with four iris effects
+When it is 1, only one iris effect is enabled, only 0, 1, 2 are effective, which greatly reduces memory usage
+00: Small default
+01: Large default
+02: Dual default
 
-03：小 dragon
-04：大 dragon
-05：双 dragon
+03: Small dragon
+04: Large dragon
+05: Dual dragon
 
-06：小 goat
-07：大 goat
-08：双 goat
+06: Small goat
+07: Large goat
+08: Dual goat
 
-09：小 noSclera
-10：大 noSclera
-11：双 noSclera
-
+09: Small noSclera
+10: Large noSclera
+11: Dual noSclera
 */
 
-/* 系统变量 */
+/* System variables */
 extern bool isCheckAction;
 extern ImuAction *act_info;
 
 eye_run *e_run = NULL;
 
-// 128有61帧左右，实测1024也只有63帧左右（原大小的情况下）
-// 改成240*240大小后，数据从pbuffer转移到pbuffer_m花费大量时间,同时屏幕刷新范围也增加
-// 改成240*240大小后，pbuffer长度必须为128，确保一次渲染一整行，屏幕实际更新两行（也就是一次渲染128个像素，根据这128个像素同时一次更新240*2个像素）
-uint16_t *pbuffer = NULL;   // 眼珠子算法渲染的缓冲区
-uint16_t *pbuffer_m = NULL; // 实际刷新到屏幕的缓存(屏幕一行的大小，240*2)
+// 128 has about 61 frames, tested 1024 also has only about 63 frames (in original size)
+// Changing to 240*240 size, transferring data from pbuffer to pbuffer_m takes a lot of time, and the screen refresh range also increases
+// Changing to 240*240 size, pbuffer length must be 128 to ensure rendering a whole line at a time, the screen actually updates two lines (rendering 128 pixels at a time, updating 240*2 pixels at a time)
+uint16_t *pbuffer = NULL;   // Buffer for eye rendering algorithm
+uint16_t *pbuffer_m = NULL; // Buffer for actual screen refresh (size of one screen line, 240*2)
 
-// 由updateEye调用
+// Called by updateEye
 bool eye_loop(void)
 {
-    /* MPU6050数据获取 */
+    /* MPU6050 data acquisition */
     if (isCheckAction)
     {
         isCheckAction = false;
         act_info = mpu.getAction();
 
-        /* MPU6050动作响应 */
+        /* MPU6050 action response */
         if (RETURN == act_info->active)
         {
             tft->fillRect(0, 0, 240, 240, 0);
             e_run->eye_flg = false;
-            return true; // 退出此功能
+            return true; // Exit this function
         }
         else if (TURN_RIGHT == act_info->active)
         {
@@ -111,7 +110,7 @@ void eye_process(lv_obj_t *ym)
     lv_scr_load_anim(obj, LV_SCR_LOAD_ANIM_OUT_BOTTOM, 573, 0, false);
     for (uint16_t i = 0; i < 573; i++)
     {
-        lv_timer_handler(); // 让LVGL更新屏幕，让操作者可以看到已执行动作
+        lv_timer_handler(); // Let LVGL update the screen so the operator can see the executed actions
         delay(1);           //
     }
     e_run = (eye_run *)malloc(sizeof(eye_run));
@@ -128,19 +127,19 @@ void eye_process(lv_obj_t *ym)
     free(pbuffer);
     free(pbuffer_m);
     free(e_run);
-    lv_scr_load_anim(ym, LV_SCR_LOAD_ANIM_OUT_TOP, 573, 0, false); // 调用系统退出函数之前，一定要等待动画结束否则会导致系统重启
-    lv_obj_invalidate(lv_scr_act());                               // 哪怕缓存没变，也让lvgl下次更新全部屏幕
-    /* 延时999ms，防止同时退出app */
+    lv_scr_load_anim(ym, LV_SCR_LOAD_ANIM_OUT_TOP, 573, 0, false); // Wait for the animation to finish before calling the system exit function, otherwise it will cause a system restart
+    lv_obj_invalidate(lv_scr_act());                               // Even if the cache hasn't changed, let lvgl update the entire screen next time
+    /* Delay 999ms to prevent simultaneous app exit */
     for (uint16_t i = 0; i < 898 + 500; i++)
     {
-        lv_timer_handler(); // 让LVGL更新屏幕，让操作者可以看到已执行动作
+        lv_timer_handler(); // Let LVGL update the screen so the operator can see the executed actions
         delay(1);           //
     }
     lv_obj_clean(obj);
     lv_obj_del(obj);
 }
 
-// 占用空间 眼睛类型 是否采用
+// Space usage Eye type Whether to adopt
 // 68.3 default v
 // 66.5 cat x
 // 70.6 doe x

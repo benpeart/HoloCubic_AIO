@@ -2,8 +2,8 @@
 #define COMMON_H
 
 #define AIO_VERSION "2.1.12"
-#define GET_SYS_MILLIS xTaskGetTickCount // 获取系统毫秒数
-// #define GET_SYS_MILLIS millis            // 获取系统毫秒数
+#define GET_SYS_MILLIS xTaskGetTickCount // Get system milliseconds
+// #define GET_SYS_MILLIS millis            // Get system milliseconds
 
 #include "Arduino.h"
 #include "driver/rgb_led.h"
@@ -27,31 +27,31 @@
 #define IMU_I2C_SDA 32
 #define IMU_I2C_SCL 33
 
-extern IMU mpu; // 原则上只提供给主程序调用
+extern IMU mpu; // Principally only for main program calls
 extern SdCard tf;
 extern Pixel rgb;
-// extern Config g_cfg;       // 全局配置文件
-extern Network g_network;  // 网络连接
-extern FlashFS g_flashCfg; // flash中的文件系统（替代原先的Preferences）
-extern Display screen;     // 屏幕对象
-extern Ambient ambLight;   // 光纤传感器对象
+// extern Config g_cfg;       // Global configuration file
+extern Network g_network;  // Network connection
+extern FlashFS g_flashCfg; // File system in flash (replacing the previous Preferences)
+extern Display screen;     // Screen object
+extern Ambient ambLight;   // Ambient light sensor object
 
 boolean doDelayMillisTime(unsigned long interval,
                           unsigned long *previousMillis,
                           boolean state);
 
-// 光感 (与MPU6050一致)
+// Ambient light (same as MPU6050)
 #define AMB_I2C_SDA 32
 #define AMB_I2C_SCL 33
 
-// 屏幕尺寸
-#define SCREEN_HOR_RES 240 // 水平
-#define SCREEN_VER_RES 240 // 竖直
+// Screen dimensions
+#define SCREEN_HOR_RES 240 // Horizontal
+#define SCREEN_VER_RES 240 // Vertical
 
 #define SCREEN_HEIGHT SCREEN_VER_RES
 #define SCREEN_WIDTH SCREEN_HOR_RES
 
-// TFT屏幕接口
+// TFT screen interface
 // #define PEAK
 #ifdef PEAK
 #define LCD_BL_PIN 12
@@ -67,14 +67,14 @@ boolean doDelayMillisTime(unsigned long interval,
 
 #define LCD_BL_PWM_CHANNEL 0
 
-// 优先级定义(数值越小优先级越低)
-// 最高为 configMAX_PRIORITIES-1
-#define TASK_RGB_PRIORITY 0  // RGB的任务优先级
-#define TASK_LVGL_PRIORITY 2 // LVGL的页面优先级
+// Priority definition (the smaller the value, the lower the priority)
+// Highest is configMAX_PRIORITIES-1
+#define TASK_RGB_PRIORITY 0  // RGB task priority
+#define TASK_LVGL_PRIORITY 2 // LVGL page priority
 
-// lvgl 操作的锁
+// lvgl operation lock
 extern SemaphoreHandle_t lvgl_mutex;
-// LVGL操作的安全宏（避免脏数据）
+// Safe macros for LVGL operations (to avoid dirty data)
 #define AIO_LVGL_OPERATE_LOCK(CODE)                          \
     if (pdTRUE == xSemaphoreTake(lvgl_mutex, portMAX_DELAY)) \
     {                                                        \
@@ -90,12 +90,12 @@ struct SysUtilConfig
     String password_1;
     String ssid_2;
     String password_2;
-    String auto_start_app;        // 开机自启的APP名字
-    uint8_t power_mode;           // 功耗模式（0为节能模式 1为性能模式）
-    uint8_t backLight;            // 屏幕亮度（1-100）
-    uint8_t rotation;             // 屏幕旋转方向
-    uint8_t auto_calibration_mpu; // 是否自动校准陀螺仪 0关闭自动校准 1打开自动校准
-    uint8_t mpu_order;            // 操作方向
+    String auto_start_app;        // The name of the app that starts automatically at boot
+    uint8_t power_mode;           // Power consumption mode (0 for energy-saving mode, 1 for performance mode)
+    uint8_t backLight;            // Screen brightness (1-100)
+    uint8_t rotation;             // Screen rotation direction
+    uint8_t auto_calibration_mpu; // Whether to automatically calibrate the gyroscope: 0 to disable automatic calibration, 1 to enable automatic calibration
+    uint8_t mpu_order;            // Operation direction
 };
 
 #define GFX 0

@@ -4,9 +4,8 @@
 #define LCD_W 240
 #define LCD_H 240
 #define log_bar_w 118
-#define tim_log_bar 1000//bar自加持续时间，单位ms
+#define tim_log_bar 1000 // bar auto-increment duration, unit ms
 #define log_anim_bg "S:/LH&LXW/log_anim/bg.bin"
-
 
 static void anim_x_cb1(lv_obj_t *var,int32_t v){
     lv_obj_set_y(var,v);
@@ -23,47 +22,47 @@ static void anim_x_cb4(lv_obj_t *var,int32_t v){
 
 void startLog(lv_obj_t *ym){
     
-    /* 创建一个log anim屏幕,并切换到此屏幕*/
+    // Create a log anim screen and switch to this screen
     lv_obj_t *LOG_SCR = lv_obj_create(NULL);
-    lv_obj_set_style_bg_color(LOG_SCR,lv_color_hex(0),LV_STATE_DEFAULT);//将此活动页面背景颜色设置为黑色
+    lv_obj_set_style_bg_color(LOG_SCR,lv_color_hex(0),LV_STATE_DEFAULT); // Set the background color of this active page to black
     lv_scr_load(LOG_SCR);
-    /* 刷新屏幕与缓存 */
+    // Refresh screen and cache
     lv_obj_invalidate(LOG_SCR);
     // lv_task_handler();
-    /* 创建log anim背景图片 */
+    // Create log anim background image
     lv_obj_t *bg_img = lv_img_create(LOG_SCR);
     lv_img_set_src(bg_img,log_anim_bg);
-    /* 设置背景透明度为0 */
+    // Set background transparency to 0
     lv_obj_set_style_img_opa(bg_img, 0,0);
-    /* 创建一个bar部件 */
+    // Create a bar component
     lv_obj_t* log_bar = lv_bar_create(bg_img);
     lv_obj_set_pos(log_bar,(LCD_W-log_bar_w)/2,LCD_H/2-10);
 
-    /* 设置bar指示器背景颜色和透明度为可见(0xa8ff78,0x78ffd6) */
-    lv_obj_set_style_bg_color( log_bar, lv_color_hex(0x00f260),LV_STATE_DEFAULT|LV_PART_INDICATOR);//渐变起始色
-    lv_obj_set_style_bg_grad_color(log_bar,lv_color_hex(0x0575e6),LV_STATE_DEFAULT|LV_PART_INDICATOR);//渐变终止色
-    lv_obj_set_style_bg_grad_dir(log_bar,LV_GRAD_DIR_HOR,LV_STATE_DEFAULT|LV_PART_INDICATOR);//开启渐变色
+    // Set bar indicator background color and transparency to visible (0xa8ff78,0x78ffd6)
+    lv_obj_set_style_bg_color( log_bar, lv_color_hex(0x00f260),LV_STATE_DEFAULT|LV_PART_INDICATOR); // Gradient start color
+    lv_obj_set_style_bg_grad_color(log_bar,lv_color_hex(0x0575e6),LV_STATE_DEFAULT|LV_PART_INDICATOR); // Gradient end color
+    lv_obj_set_style_bg_grad_dir(log_bar,LV_GRAD_DIR_HOR,LV_STATE_DEFAULT|LV_PART_INDICATOR); // Enable gradient color
     lv_obj_set_style_bg_opa(log_bar,255,LV_STATE_DEFAULT|LV_PART_INDICATOR);
-    /* 设置bar主体背景颜色和透明度为不可见 */
+    // Set bar main background color and transparency to invisible
     lv_obj_set_style_bg_color(log_bar,lv_color_hex(0),LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(log_bar,0,LV_STATE_DEFAULT);
-    /* 设置bar形状设置为长条形状 */
+    // Set bar shape to strip shape
     lv_obj_set_size(log_bar,log_bar_w,5);
-    lv_bar_set_range(log_bar,0,log_bar_w);//设置值的范围（范围要在设置值之前设置！）
-    lv_obj_set_style_anim_time( log_bar, tim_log_bar,LV_STATE_DEFAULT );//动画也要在设置值之前就设置，否则看不到效果（时间单位为ms）
-    lv_bar_set_mode(log_bar,LV_BAR_MODE_NORMAL);//从零值绘制到当前值（当前值可以小于0）
-    lv_obj_update_layout(log_bar);//更新配置到部件
-    lv_bar_set_value(log_bar,log_bar_w,LV_ANIM_ON);//将bar的值设为指定值，它会再tim_log_bar时间内完成设置
+    lv_bar_set_range(log_bar,0,log_bar_w); // Set value range (range should be set before setting value!)
+    lv_obj_set_style_anim_time( log_bar, tim_log_bar,LV_STATE_DEFAULT ); // Animation should also be set before setting value, otherwise the effect will not be seen (time unit is ms)
+    lv_bar_set_mode(log_bar,LV_BAR_MODE_NORMAL); // Draw from zero value to current value (current value can be less than 0)
+    lv_obj_update_layout(log_bar); // Update configuration to component
+    lv_bar_set_value(log_bar,log_bar_w,LV_ANIM_ON); // Set the bar value to the specified value, it will be completed within tim_log_bar time
 
-    /* 设置log字样标签，没插内存卡会导致标签位置不对 */
+    // Set log label, not inserting memory card will cause label position to be incorrect
     lv_obj_t* log_label = lv_label_create(bg_img);
-    lv_obj_align(log_label,LV_ALIGN_CENTER,0,10);//基于图片居中，且向下偏移10
-    lv_obj_set_style_text_font(log_label,&lv_font_montserrat_24,LV_STATE_DEFAULT );//需要先在lv_conf.h中开启此字体对应宏
+    lv_obj_align(log_label,LV_ALIGN_CENTER,0,10); // Center based on image and offset down by 10
+    lv_obj_set_style_text_font(log_label,&lv_font_montserrat_24,LV_STATE_DEFAULT ); // Need to enable the corresponding macro of this font in lv_conf.h
     lv_label_set_text(log_label,"LH&LXW");
-    lv_obj_set_style_text_color(log_label,lv_color_hex(0xa8a078),LV_STATE_DEFAULT);//这里就不设置渐变色，因为字符的渐变色是以单个字符为对象的
-    lv_obj_set_style_text_opa(log_label,0,LV_STATE_DEFAULT);//设置背景颜色的透明度
+    lv_obj_set_style_text_color(log_label,lv_color_hex(0xa8a078),LV_STATE_DEFAULT); // Do not set gradient color here, because the gradient color of characters is based on individual characters
+    lv_obj_set_style_text_opa(log_label,0,LV_STATE_DEFAULT); // Set background color transparency
 
-    /* log bar坐标改变动画 */
+    // log bar coordinate change animation
     lv_anim_t a1;
     lv_anim_init(&a1);
     lv_anim_set_var(&a1,log_bar);
@@ -71,9 +70,9 @@ void startLog(lv_obj_t *ym){
     lv_anim_set_time(&a1,800);
     lv_anim_set_exec_cb(&a1,(lv_anim_exec_xcb_t)anim_x_cb1);
     lv_anim_set_path_cb(&a1,lv_anim_path_ease_out);
-    lv_anim_set_delay(&a1, 700);//在值改变完成前1000-700=300ms前开始此动画
+    lv_anim_set_delay(&a1, 700); // Start this animation 1000-700=300ms before the value change is completed
 
-    /* log 标签坐标改变动画 */
+    // log label coordinate change animation
     lv_anim_t a2;
     lv_anim_init(&a2);
     lv_anim_set_var(&a2,log_label);
@@ -81,9 +80,9 @@ void startLog(lv_obj_t *ym){
     lv_anim_set_time(&a2,1100);
     lv_anim_set_exec_cb(&a2,(lv_anim_exec_xcb_t)anim_x_cb2);
     lv_anim_set_path_cb(&a2,lv_anim_path_linear);
-    lv_anim_set_delay(&a2, 700);//同步bar坐标变化
+    lv_anim_set_delay(&a2, 700); // Synchronize bar coordinate changes
 
-    /* log 标签透明度改变动画 */
+    // log label transparency change animation
     lv_anim_t a3;
     lv_anim_init(&a3);
     lv_anim_set_var(&a3,log_label);
@@ -93,7 +92,7 @@ void startLog(lv_obj_t *ym){
     lv_anim_set_path_cb(&a3,lv_anim_path_linear);
     lv_anim_set_delay(&a3, 700);
 
-    /* log 背景颜色透明度改变动画 */
+    // log background color transparency change animation
     lv_anim_t a4;
     lv_anim_init(&a4);
     lv_anim_set_var(&a4,bg_img);
@@ -102,31 +101,31 @@ void startLog(lv_obj_t *ym){
     lv_anim_set_exec_cb(&a4,(lv_anim_exec_xcb_t)anim_x_cb4);
     lv_anim_set_path_cb(&a4,lv_anim_path_ease_in);
 
-    /* 切换log anim页面 */
+    // Switch log anim page
     lv_scr_load(LOG_SCR);
 
-    /* 开启动画 */
+    // Start animation
     lv_anim_start(&a1);
     lv_anim_start(&a2);
     lv_anim_start(&a3);
     lv_anim_start(&a4);
     
-    /* 等待动画结束 */
-    /* 也可以用lv_anim_set_ready_cb函数实现 */
+    // Wait for animation to end
+    // You can also use the lv_anim_set_ready_cb function to achieve this
     for(uint16_t i=0;i<2000;i++){
         lv_task_handler();
         delay(1);
     }
-    /* 丝滑过度到表情菜单，同时删除旧屏幕(这里不用此函数自带的删除，等执行完后手动删除) */
-    lv_scr_load_anim(ym, LV_SCR_LOAD_ANIM_OUT_BOTTOM, 573, 0, false);//上翻动画，切换到此页面
+    // Smooth transition to the emoji menu, while deleting the old screen (do not use the delete function that comes with this function, delete it manually after execution)
+    lv_scr_load_anim(ym, LV_SCR_LOAD_ANIM_OUT_BOTTOM, 573, 0, false); // Upward animation, switch to this page
 
-    /* 这里加延时是为了防止动画执行完成前就删除动画对象导致系统出错 */
+    // Add delay here to prevent system errors caused by deleting animation objects before the animation is completed
     for(uint16_t i=0;i<573;i++){
         lv_task_handler();
         delay(1);
     }
 
-    /* 删除启动log动画所有部件 */
+    // Delete all components of the startup log animation
     lv_obj_clean(LOG_SCR);
     lv_obj_del(LOG_SCR);
 }

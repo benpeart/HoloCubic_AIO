@@ -11,7 +11,7 @@ extern "C"
 #include "lvgl.h"
 #define ANIEND                      \
     while (lv_anim_count_running()) \
-        lv_task_handler(); //等待动画完成
+        lv_task_handler(); // Wait for animation to complete
 
     void server_gui_init(void);
     void display_setting_init(void);

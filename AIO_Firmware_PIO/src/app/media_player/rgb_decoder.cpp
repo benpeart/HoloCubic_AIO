@@ -25,7 +25,7 @@ RgbPlayDecoder::RgbPlayDecoder(File *file, bool isUseDMA)
 RgbPlayDecoder::~RgbPlayDecoder(void)
 {
     Serial.println(F("~RgbPlayDecoder"));
-    // 释放资源
+    // Release resources
     video_end();
 }
 
@@ -36,7 +36,7 @@ bool RgbPlayDecoder::video_start()
         m_displayBufWithDma[0] = (uint8_t *)heap_caps_malloc(MOVIE_BUFFER_SIZE, MALLOC_CAP_DMA);
         m_displayBufWithDma[1] = (uint8_t *)heap_caps_malloc(MOVIE_BUFFER_SIZE, MALLOC_CAP_DMA);
         tft->initDMA();
-        // 使用DMA
+        // Use DMA
         // DMADrawer::setup(MOVIE_BUFFER_SIZE, SPI_FREQUENCY, TFT_MOSI, TFT_MISO, TFT_SCLK, TFT_CS, TFT_DC);
     }
     else
@@ -74,11 +74,11 @@ bool RgbPlayDecoder::video_play_screen(void)
 {
     // Read video
     uint32_t l = 0;
-    unsigned long Millis_1 = 0; // 更新的时间
+    unsigned long Millis_1 = 0; // Update time
 
     if (m_isUseDMA)
     {
-        // 80M主频大概200ms一帧 240M大概150ms一帧
+        // 80M main frequency takes about 200ms per frame, 240M takes about 150ms per frame
         uint8_t *dst = NULL;
         dst = m_displayBufWithDma[0];
         m_pFile->read(dst, MOVIE_BUFFER_SIZE);
@@ -96,7 +96,7 @@ bool RgbPlayDecoder::video_play_screen(void)
         m_pFile->read(dst, MOVIE_BUFFER_SIZE);
         tft->pushImageDMA(0, 180, 240, 60, (uint16_t *)dst, nullptr);
 
-        // 以下是使用DMADrawer接口的实现 目前有一定问题，暂时放着
+        // The following is the implementation using the DMADrawer interface, currently has some issues, temporarily left here
         // uint8_t *dst = NULL;
         // dst = DMADrawer::getNextBuffer();
         // l = m_pFile->read(dst, MOVIE_BUFFER_SIZE);
@@ -144,7 +144,7 @@ bool RgbPlayDecoder::video_play_screen(void)
 bool RgbPlayDecoder::video_end(void)
 {
     m_pFile = NULL;
-    // 结束播放 释放资源
+    // End playback, release resources
     if (m_isUseDMA)
     {
         if (NULL != m_displayBufWithDma[0])
@@ -154,11 +154,11 @@ bool RgbPlayDecoder::video_end(void)
             m_displayBufWithDma[0] = NULL;
             m_displayBufWithDma[1] = NULL;
         }
-        // 需要添加wait 不然强行释放dma 会导致下一次initDMA失败
+        // Need to add wait, otherwise forcibly releasing DMA will cause initDMA to fail next time
         // tft->dmaWait();
         // tft->deInitDMA();
 
-        // 使用DMA
+        // Use DMA
         // DMADrawer::setup(MOVIE_BUFFER_SIZE,
         //                  SPI_FREQUENCY,
         //                  TFT_MOSI, TFT_MISO,

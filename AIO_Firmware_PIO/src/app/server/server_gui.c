@@ -32,7 +32,7 @@ void server_gui_init(void)
 
 void display_setting_init(void)
 {
-    lv_obj_t *act_obj = lv_scr_act(); // 获取当前活动页
+    lv_obj_t *act_obj = lv_scr_act(); // Get the current active screen
     if (act_obj == main_scr)
         return;
 
@@ -41,9 +41,9 @@ void display_setting_init(void)
         lv_obj_clean(main_scr);
     }
 
-    lv_obj_clean(act_obj); // 清空此前页面
+    lv_obj_clean(act_obj); // Clear the previous screen
 
-    // 本地的ip地址
+    // Local IP address
     main_scr = lv_obj_create(NULL);
     lv_obj_set_size(main_scr, 240 , 240);
     lv_obj_set_pos(main_scr, 0, 0);
@@ -87,7 +87,7 @@ void setting_gui_del(void)
 {
     if (NULL != main_scr)
     {
-        lv_obj_clean(main_scr); // 清空此前页面
+        lv_obj_clean(main_scr); // Clear the previous screen
         main_scr = NULL;
         local_ip_label = NULL;
         ap_ip_label = NULL;
@@ -95,7 +95,7 @@ void setting_gui_del(void)
         title_label = NULL;
     }
 
-    // 手动清除样式，防止内存泄漏
+    // Manually clear styles to prevent memory leaks
     // lv_style_reset(&default_style);
     // lv_style_reset(&label_style);
 }

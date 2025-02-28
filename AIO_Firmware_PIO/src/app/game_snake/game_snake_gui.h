@@ -8,7 +8,7 @@ extern "C"
 
 #include "lvgl.h"
 
-// 定义贪吃蛇的移动方向
+// Define the movement direction of the snake
 typedef enum {
     DIR_UP,
     DIR_DOWN,
@@ -18,11 +18,11 @@ typedef enum {
 
 #define ANIEND                      \
     while (lv_anim_count_running()) \
-        lv_task_handler(); //等待动画完成
+        lv_task_handler(); // Wait for the animation to complete
 
     void game_snake_gui_init(void);
     void generate_food();
-    void update_driection(Direction dir);
+    void update_direction(Direction dir);
     void display_snake(int gameStatus, lv_scr_load_anim_t anim_type);
     void game_snake_gui_del(void);
 

@@ -1,40 +1,50 @@
+# An English fork of the HoloCubic_AIO (All in one for HoloCubic) code
+The purpose of this fork is to make it easier for me (as an English speaker) to use and in the future modify the code. The only changes so far are to translate it from Chinese to English.
+
 # HoloCubic_AIO (All in one for HoloCubic)
-### _You can also read a translated version of this file [中文版](https://github.com/ClimbSnail/HoloCubic_AIO/blob/main/README.md) or [in Korean 한국어](./README.md)._
+### _You can also read a translated version of this file [in English 英文版](https://github.com/ClimbSnail/HoloCubic_AIO/blob/main/README_English.md) or [in Korean 한국어](./README_English.md)._
 
-"AIO" means All in one, which aims to integrate as many functions as possible into Holocubic AIO firmware and insist on open source. At present, the firmware source code reaches ` 2W + ` line, and the upper computer source code reaches ` 4K ` line (all excluding font pictures). We sincerely invite you to jointly develop AIO firmware, upper computer and its periphery, so that the firmware can meet the needs of more people. 
+`Holocubic` was originally an open-source project by `Zhihui Jun`. This project is an independent third-party firmware project running on `HoloCubic hardware`.
 
-* The original author's project link https://github.com/peng-zhihui/HoloCubic
-* Address of the project https://github.com/ClimbSnail/HoloCubic_AIO (latest version)
-* Or https://gitee.com/ClimbSnailQ/HoloCubic_AIO 
+AIO stands for All in one, aiming to integrate as many functions as possible into the Holocubic AIO firmware and adhere to open source. Currently, the firmware source code has reached `20k+` lines, and the upper computer source code has `4k` lines (excluding font library images). We sincerely invite everyone to jointly develop AIO firmware, upper computer, and peripherals to meet the needs of more people.
 
-### Developer
-* AIO Framework Development and Some APP Writing: [ClimbSnail] (https://github.com/ClimbSnail)
-* 2048 Game Application Development: [AndyXFuture] (https://github.com/AndyXFuture)
-* New Weather Clock Application Development: [PuYuuu] (https://github.com/PuYuuu)
-* BiliBili fan application development: [cnzxo] (https://github.com/cnzxo/)
-* Memorial Day, Heartbeat App Development: [WoodwindHu] (https://github.com/WoodwindHu)
-* Developers continue to join. . . . 
+In addition, the code of this firmware is completely open source for everyone to learn and play. If you use this project for secondary open source or partial reference, please appropriately indicate the reference source.
 
-_**Welcome to AIO internal test QQ discussion group**_
+* Original author's project link: https://github.com/peng-zhihui/HoloCubic
+* This project's address: https://github.com/ClimbSnail/HoloCubic_AIO (latest version)
+* Or https://gitee.com/ClimbSnailQ/HoloCubic_AIO
 
-一群群号 755143193
-二群群号 860112883
-三群群号 676732387
-四群群号 749207817
+### Developers
+* AIO framework development and part of the APP writing: [ClimbSnail](https://github.com/ClimbSnail)
+* 2048 game application development: [AndyXFuture](https://github.com/AndyXFuture)
+* New weather clock application development: [PuYuuu](https://github.com/PuYuuu)
+* BiliBili fan application development: [cnzxo](https://github.com/cnzxo/)
+* Anniversary and heartbeat application development: [WoodwindHu](https://github.com/WoodwindHu)
+* PC resource monitoring application development: [Jumping99](https://github.com/Jumping99)
+* Multi-functional animation application development: [LHYHHD](https://github.com/LHYHHD)
+* Developers are continuously joining...
+
+_**Welcome to join the AIO internal test QQ discussion group**_
+
+* Group 1 number: `755143193`
+* Group 2 number: `860112883`
+* Group 3 number: `676732387`
+* Group 4 number: `749207817`
+* Group 5 number: `866784418`
 
 ![QQ_Group](https://gitee.com/ClimbSnailQ/Project_Image/raw/master/OtherProject/holocubic_qq_group.jpg)
 
-### Main features 
-1. Aggregate a variety of apps, with built-in weather, clock, photo album, special effects animation, video playback, computer screen projection, web settings and so on. (Reference manual for specific use of each APP)
-2. Whether tf card is plugged in or not, whether mpu6050 is welded normally, and whether wifi is connected (2.4 G wifi must be used) will not affect the system startup.
-3. The program is relatively modular and low coupling.
-4. Provide web interface for distribution network and other setting options. Note: Refer to ` APP introduction ` for specific operation
-5. Provide web-side connection. Besides supporting ip access, it also supports domain name direct access http://holocubic (some browsers may not support it well)
-6. Provide web files to upload to SD card (including deletion), without unplugging SD to update pictures.
-7. Provide a complete set of upper computer software and open source upper computer source code. Https://github.com/ClimbSnail/HoloCubic_AIO_Tool 
+### Main Features
+1. Aggregates various apps, including weather, clock, photo album, special effects animation, video playback, computer screen projection, web settings, etc. (Refer to the manual for specific usage of each app)
+2. The system starts and the screen displays normally regardless of whether the TF card is inserted, whether the MPU6050 is soldered correctly, or whether it is connected to WiFi (must be 2.4G WiFi).
+3. The program is relatively modular and low-coupling.
+4. Provides a web interface for network configuration and other settings. Note: Refer to `APP Introduction` for specific operations.
+5. The web interface supports both IP access and direct domain name access http://holocubic (some browsers may not support it well).
+6. Provides file upload to the SD card via the web interface (including deletion), no need to remove the SD card to update pictures.
+7. Provides a complete set of upper computer software and open-source upper computer source code. https://github.com/ClimbSnail/HoloCubic_AIO_Tool
 
-### This firmware designs a set of low coupling framework, which is more conducive to the realization of multi-functions 
-Bilibili function operation demonstration video link https://www.bilibili.com/video/BV1wS4y1R7YF/
+### This firmware is designed with a low-coupling framework, which is more conducive to the realization of multiple functions
+Bilibili function operation demonstration video link: https://www.bilibili.com/video/BV1wS4y1R7YF/
 
 ![HomePage](Image/holocubic_main.jpg)
 
@@ -45,169 +55,224 @@ Bilibili function operation demonstration video link https://www.bilibili.com/vi
 ![SettingPage](Image/holocubic_setting.png)
 
 
-### Firmware brushing tool (no IDE environment required) 
-Download the upper computer in the group for brushing.
-1. `bootloader_dio_40m. bin` booted `bootloader`.
+### Firmware Flashing Tool (No need to set up any IDE environment)
+Download the upper computer in the group to flash the firmware.
+1. `bootloader_dio_40m.bin` bootloader.
 2. `partitions.bin` partition file
 3. `boot_app0.bin`
-4. Latest firmware `HoloCubic_AIO_XXX.bin` 
+4. The latest firmware `HoloCubic_AIO_XXX.bin`
 
-The ` HoloCubic_AIO_XXX. bin ` file is updated with each version update, and the other three files remain basically unchanged.
+The `HoloCubic_AIO_XXX.bin` file is updated with each version update, while the other three files basically remain unchanged.
 
-Put the first three files above in the same directory as ` CubicAIO_Tool. Exe `, double-click to run ` CubicAIO_Tool. Exe `, and select the latest firmware ` HoloCubic_AIO_XXX. bin ` in the software to brush the firmware.
+Place the above three files and `CubicAIO_Tool.exe` in the same directory, double-click to run `CubicAIO_Tool.exe`, select the latest firmware `HoloCubic_AIO_XXX.bin` in the software, and you can flash the firmware.
 
-Host computer operation demonstration video link https://b23.tv/5e6udh
+Upper computer operation demonstration video link: https://b23.tv/5e6uDh
 
-Like AIO firmware, this host computer insists on open source, and its open source address is https://github.com/ClimbSnail/HoloCubic_AIO_Tool 
+The upper computer, like the AIO firmware, adheres to open source. Open source address: https://github.com/ClimbSnail/HoloCubic_AIO_Tool
 
 ![AIO_TOOL](Image/holocubic_aio_tool.png)
 
 ![AIO_TOOL](https://gitee.com/ClimbSnailQ/Project_Image/raw/master/OtherProject/holocubic_aio_tool.png)
 
-### Precautions for startup 
-Since the small TV uses MPU6050 gyroscope accelerometer, it is necessary to keep the small TV naturally (do not hold it in hand) 3 seconds before power-on, and wait for the sensor to initialize. After initialization, the RGB light will fully light up, and then it can operate normally. Inserting or not inserting the memory card will not affect the normal boot. If there is a problem with 6050 welding, the attitude reading will be disordered after initialization (phenomenon: the application will be continuously switched). 
+### Boot Precautions
+Since the small TV uses the MPU6050 gyroscope accelerometer, it needs to be placed naturally (not held by hand) for the first 3 seconds after power-on to wait for the sensor to initialize. After the initialization is complete, the RGB light will be fully lit, and then normal operation can be performed. Whether or not the memory card is inserted does not affect normal booting. If the 6050 is soldered incorrectly, the attitude reading will be confused after initialization (phenomenon: the application will keep switching).
 
-### Function switching instructions:
-1. The file system of the TF card is fat32. TF is non-essential hardware, but photo albums, video playback and other functions need to rely on this. If you are going to use the memory card, it is best to put all the files and folders in the directory of the memory card in this project in the root directory of the TF card before using the memory card.
-2. Plugging tf memory card or not will not affect boot, but will affect the functions of some apps (which will be explained in the introduction of each app).
-3. Shake from side to side to switch and select various apps.
-4. Tilt forward for 1s to enter the APP application on the current page, and more functions will be integrated in the future. Also, tilt back for 1s to exit the APP.
+### Function Switching Instructions:
+1. The file system of the TF card is fat32. TF is not a necessary hardware, but functions such as photo albums and video playback depend on it. If you plan to use a memory card, it is best to place all the files and folders in the `place to memory card` directory of this project in the root directory of the TF card before using the memory card.
+2. Whether or not the TF memory card is inserted does not affect booting, but it affects the functions of certain apps (explained in each app introduction).
+3. Shake left and right for `0.5s` to switch and select various apps.
+4. Tilt forward for `1s` to enter the current page's app, and more functions will be integrated in the future. Similarly, tilt backward for 1s to exit the app.
 
-### Introduction to APP
+### APP Introduction
 
 ##### Web Configuration Service (Web Server)
-1. Operating conditions: None. Note: WiFi and other information is stored in flash, memory card does not affect the connection of WiFi function.
-2. When enabled, ` Web Sever Start 'is displayed. The small TV turns on AP mode, which is built on ` AP_IP ` (marked on the service interface of the screen). The hot spot of AP mode is called ` HoloCubic_AIO ` without password.
-3. Start using the computer in the same network environment (same network segment) as' HoloCubic '. If you haven't connected to WiFi before, you need to use your computer to connect to WiFi without password, which is a hot spot named ` HoloCubic_AIO ` released by HoloCubic.
-4. Enter ` Local_IP ` or ` AP_IP ` in the browser address bar (http://192.168.4.2 also supports domain name direct access to http://holocubic) to enter the administrative settings background. It is recommended to use ` ip address ` access.
-5. System parameters, weather APP parameters, photo album parameters, player parameters and so on can be set in the webpage.
-6. Because of the large number of apps at present, it is cumbersome to switch and find, so you can also configure the "self-starting app" in the "Web Server". 
+1. Operating conditions: None. Note: WiFi and other information are stored in flash, and the memory card does not affect the connection of WiFi functions.
+2. After enabling, it will display `Web Server Start`. The small TV starts AP mode, established on `AP_IP` (marked on the screen's service interface), and the AP mode hotspot name is `HoloCubic_AIO` with no password.
+3. When starting to use, the computer should be in the same network environment (same subnet) as `HoloCubic`. If WiFi has not been connected before, use the computer to connect to the hotspot name `HoloCubic_AIO` with no password released by HoloCubic.
+4. Enter `Local_IP` or `AP_IP` ( http://192.168.4.2 also supports direct domain name access http://holocubic ) in the browser address bar to enter the management settings background. It is recommended to use `IP address` to access.
+5. The webpage can set system parameters, weather app parameters, photo album parameters, player parameters, etc.
+6. Due to the large number of current apps, switching and searching are cumbersome. You can also configure `auto-start app` in the `Web Server`.
 
-##### File Manager (File Manager)
-Function: Manage the files on the memory card through the wireless network.
+##### File Manager
+Function: Manage files on the memory card through a wireless network.
 
-1. Run APP condition: WiFi must be configured normally. Memory card must be inserted. To avoid restarting due to insufficient power during WiFi connection, please ensure that the USB port is fully powered. At present, some functions are still under development.
-2. Entering the ` Holocubic 'file manager will automatically connect to the configured WiFi and display the IP address.
-3. Unfinished: Fill in your IP address of 'Holocubic' in the file manager software of the upper computer (the port can be changed without changing), and click Connect.
-Note: Currently the file manager temporarily uses windows explorer, and enter ftp://holocubic: aio @ 192.168. 123.241 in the address bar (192.168. 123.241 is the IP address displayed on my little TV, if prompted to turn on access, turn it on) 
+1. Running APP conditions: WiFi must be configured normally. The memory card must be inserted. To avoid insufficient power during WiFi connection causing a restart, ensure sufficient USB port power supply. Some functions are still under development.
+2. After entering the `Holocubic` file manager, it will automatically connect to the configured WiFi and display the IP address.
+3. Incomplete: Enter the IP address of your `Holocubic` in the file manager software of the upper computer (the port can be left unchanged) and click connect.
 
-##### Photo album (Picture)
-1. Conditions for running APP: A memory card must be inserted, a ` image/` directory must exist under the root directory of the memory card (you can also use the ` Web Server service ` APP to upload photos through the browser), and a picture file (jpg or bin) must exist under the ` image/` directory.
-2. Convert the pictures to be played into a certain format (. jpg or. bin), and then save them in the ` image/` directory. The file name of the pictures must be English characters or numbers.
-3. After entering the photo album app with firmware, the picture file in the ` image/` directory will be read.
-4. The web page side of ` WebServer ` can set additional functions. 
+Note: The file manager temporarily uses `Windows Explorer`. Enter ftp://holocubic:aio@192.168.123.241 in the address bar (192.168.123.241 is the IP address displayed on my small TV. If prompted to enable access, enable it).
 
-About picture conversion: Use the attached upper computer conversion (resolution is arbitrary, the software will automatically compress to the specified resolution).
-* Common weather pictures, converted to C Array, format Indexed 16 colors, select C Array.
-* Images that are not commonly used can be converted into (True color with alpha, select Binary RGB565) bin files and stored in SD cards, which can save some program storage space and increase functions. Conversion to jpg images is supported. 
+##### Photo Album (Picture)
+1. Running APP conditions: The memory card must be inserted, and the root directory of the memory card must contain the `image/` directory (you can also use the `Web Server service` app to upload photos through the browser). The `image/` directory must contain image files (jpg or bin).
+2. Convert the images to be played into a certain format (.jpg or .bin) and save them in the `image/` directory. The image file name must be in English characters or numbers (but cannot start with a number).
+3. After entering the photo album app with the firmware, it will read the image files in the `image/` directory.
+4. The `WebServer` webpage can set additional functions.
 
-##### Video playback (Media)
-1. Conditions for running APP: Memory card must be inserted, and ` movie/` directory must exist under the root directory of memory card.
-2. Convert the video to be played (preferably 1: 1 aspect ratio) into a target file (mjpeg or rgb format) by using the conversion tool matched with this firmware, and store it in the ` movie/` directory. The video file name must be English characters or numbers.
-3. After running the player app, the video files in the ` movie/` directory will be read.
-4. Under the default power, it enters the low power consumption mode after 90 s without any action, and enters the second-level low power consumption mode after 120s, which is manifested by the decrease of the number of playing frames.
-5. The web page side of ` WebServer ` can set additional functions. 
+About image conversion: Use the attached upper computer for conversion (resolution is arbitrary, the software will automatically compress to the specified resolution).
+* Common weather images are converted to C arrays in Indexed 16 colors format.
+* Uncommon images can be converted to (True color with alpha, choose Binary RGB565) bin files and stored on the SD card, saving some program storage space for adding functions. Supports conversion to jpg images.
 
-##### Screen share, screen share
-1. Conditions for running the app: No memory card is required, but you need to use the ` Web Server Service ` app to set your wifi password (make sure you can connect to the router). To avoid restarting due to insufficient power during WiFi connection, please ensure that the USB port is fully powered.
-2. At present, the upper computer uses third-party software, and will independently write the projection upper computer in the later stage to improve the performance.
-3. The upper computer of this screen projection is the upper computer of [Daguai] (https://gitee.com/superddg123/esp32-TFT/tree/master).
-4. The web page side of ` WebServer ` can set additional functions. 
+##### Video Playback (Media)
+1. Running APP conditions: The memory card must be inserted, and the root directory of the memory card must contain the `movie/` directory.
+2. Convert the videos to be played (preferably with an aspect ratio of 1:1) using the conversion tool provided with this firmware to the target file (mjpeg or rgb format) and store them in the `movie/` directory. The video file name must be in English characters or numbers (but cannot start with a number).
+3. After running the player app, it will read the video files in the `movie/` directory.
+4. Under default power, it enters low power mode after 90s of no action and enters secondary low power mode after 120s, with the specific performance being a decrease in playback frame rate.
+5. The `WebServer` webpage can set additional functions.
 
-##### Weather (Weather)
-There are two weather clock apps 
-###### New version of weather
-1. PuYuuu ` mimics Misaka ` s clock interface in the new edition. Use the https://www.tianqiapi.com Weather API.
-2. Conditions for running APP: It must be networked and set ` tianqi_appid `, ` tianqi_appsecret `, ` tianqi city name (Chinese) `.
-2. To use the new weather clock, you need to modify ` tianqi_appid `, ` tianqi_appsecret ` in the "Web Server" web service. (Application address https://www.yiketianqi.com/user/login) 
-###### Old version of weather old
-1. The old UI design mimics [CWEIB] (https://github.com/CWEIB)
-2. Conditions for running APP: It must be networked and set the location, weather_key. It works normally in most cases without inserting a memory card.
-3. Generally, it can work without inserting a memory card, but some weather icons are stored in the memory card (because the internal flash is not enough), so it is necessary to copy the ` weather/` folder attached to the firmware to the root directory of the tf card.
-4. To use the old weather clock, you need to modify the "intimate weather city name" and "key" of intimate weather in the "Web Server" web service. (The application address is https://seniverse.com. The program uses the v3 version of api by default.)
+##### Screen Share, Computer Screen Projection (Screen share)
+1. Running APP conditions: No memory card is needed, but the WiFi password needs to be set using the `Web Server service` app (ensure it can connect to the router). To avoid insufficient power during WiFi connection causing a restart, ensure sufficient USB port power supply.
+2. The upper computer currently uses third-party software, and an independent screen projection upper computer will be developed later to improve performance.
+3. This screen projection upper computer uses the upper computer of [Superddg](https://gitee.com/superddg123/esp32-TFT/tree/master). If the screen is stuck, you can lower the image quality to improve the frame rate.
+4. The `WebServer` webpage can set additional functions.
 
-Note: Even after the network is disconnected, the clock still runs. (It is best to connect WiFi when starting up, which will automatically synchronize the clock. Try to synchronize the clock intermittently during use) 
+##### Weather, Clock (Weather)
+There are two weather clock apps
+###### New weather
+1. The new version is designed by `PuYuuu` imitating the `misaka` clock interface. It uses the Gaode Weather API.
+2. Running APP conditions: Must be in a connected state.
+3. To use the new weather clock, modify the `city name (accurate city code)` and `API personal key` in the "Web Server" webpage service. (Reference code table for city codes: https://lbs.amap.com/api/webservice/download, method to obtain the key: https://lbs.amap.com/api/webservice/create-project-and-key)
+###### Old weather
+1. The old version UI design imitates [CWEIB](https://github.com/CWEIB)
+2. Running APP conditions: Must be in a connected state and set the location and weather_key. In most cases, it can work normally without inserting a memory card.
+3. Generally, it can work without a memory card, but some weather icons are stored in the memory card (due to insufficient internal flash). Copy the `weather/` folder provided with the firmware to the root directory of the TF card.
+4. To use the old weather clock, modify the `Xinzhi Weather city name` and `key (private key)` in the "Web Server" webpage service. (Application address: https://seniverse.com. The program uses the v3 version of the API by default)
+
+Note: Even if disconnected from the network, the clock still runs. (It is best to connect to WiFi when booting, as it will automatically synchronize the clock. It will intermittently try to synchronize the clock during use)
 
 ##### Special Effects Animation (Idea)
-1. Run APP condition: None. Built-in special effects animation.
+1. Running APP conditions: None. Built-in several special effects animations.
 
-Note: Transplant the function of "Peter Pan", thank you here! 
+Note: The function was ported from the group member "Xiaofeixia". Thanks!
 
 ##### 2048 APP
-1. The '2048' game was written and agreed by group friend 'AndyXFuture' and incorporated into AIO firmware by 'ClimbSnail'. The original project link is ` https://github.com/AndyXFuture/HoloCubic-2048-animm '
-2. Run APP condition: None. As long as the basic screen lights up.
-3. Operation Note: The game "up" and "down" operation because of the original "enter" and "exit" as the same action, the system has been operating for a differentiated action, the game "up" and "down" normal operation can be, "enter" and "exit" need to tilt 1 second before triggering. 
+1. The `2048` game was written by the group member `AndyXFuture` and agreed to be integrated into the AIO firmware by `ClimbSnail`. The original project link is `https://github.com/AndyXFuture/HoloCubic-2048-anim`
+2. Running APP conditions: None. As long as the screen can light up.
+3. Operation note: In the game, the `up` and `down` operations are the same actions as the original `enter` and `exit`. The system distinguishes actions by operation duration. In the game, `up` and `down` operate normally, while `enter` and `exit` require tilting for 1 second to trigger.
 
 ##### BiliBili APP
-1. Run app condition: A folder named ` bilibili ` must be in the memory card. Wifi must be configured normally. To avoid restarting due to insufficient power during WiFi connection, please ensure that the USB port is fully powered.
-2. 'UID' viewing method: Open bilibili on the computer browser and log in to the account. After that, the browser opens a blank page and pastes Enter this website https://space.bilibili.com/. A string of pure digital codes will automatically appear at the tail of the website, which is UID.
-3. Before using it for the first time, fill in the ` UID ` code on the Web page of ` WebServer App '.
-4. It is necessary to add a picture named ` avatar.bin ` own bilibili avatar in the folder named ` bilibili ` in the memory card, and a ` bin ` file with a resolution of ` 100*100 ` (it can be converted by AIO host computer). 
+1. Running APP conditions: The memory card must contain a folder named `bilibili`. WiFi must be configured normally. To avoid insufficient power during WiFi connection causing a restart, ensure sufficient USB port power supply.
+2. `UID` viewing method: Open Bilibili on the computer browser and log in to the account. Then open a blank page in the browser and paste this URL https://space.bilibili.com/ and press Enter. A string of pure numbers will automatically appear at the end of the URL, which is the UID.
+3. Before using it for the first time, fill in the `UID` code on the `WebServer App` webpage.
+4. Add a `avatar.bin` image of your Bilibili avatar with a resolution of `100*100` to the `bilibili` folder on the memory card (you can use the AIO upper computer to convert it).
 
-Note: The program is written by ` cnzxo `. 
+Note: The program was written by `cnzxo`.
 
-##### Anniversaries (Anniversaries)
-1. Run APP condition: Networking status
-2. Before using it for the first time, you should fill in the name and date of the anniversary on the webpage of ` WebServer App `. At present, you can set up two anniversaries. The words supported by anniversaries are ` birthday and graduation, raising small dinosaurs, planting potatoes, wife, girlfriend, parents, milk, siblings, brothers and sisters, wedding anniversary '. If the words contained in the anniversaries name are not within this range, please generate your own font file and replace the ` src\ app\ anniversaries\ msyhbd_24. c ` file. Date format such as ` 2022.5.8 ', if the year is set to 0, it is considered to be a repetitive anniversary (such as birthday) every year.
+##### Anniversary
+1. Running APP conditions: Connected state
+2. Before using it for the first time, fill in the anniversary name and date on the `WebServer App` webpage. Currently, two anniversaries can be set. The supported characters for the anniversary name are `birthday, graduation, raising a small dinosaur, planting potatoes, wife, girlfriend, parents, grandparents, siblings, marriage anniversary`. If the anniversary name contains characters not in this range, please generate the font file yourself and replace the `src\app\anniversary\msyhbd_24.c` file. The date format is `2022.5.8`. If the year is set to 0, it is considered an annual anniversary (such as a birthday).
 
-Note: Remembrance Day and Heartbeat are reproduced from the [LizCubic] (https://github.com/qingehao/LizCubic) project. The program is written by ` WoodwindHu ` 
+Note: The anniversary and heartbeat are reproduced from the [LizCubic](https://github.com/qingehao/LizCubic) project. The program was written by `WoodwindHu`.
 
-##### Heartbeat (Heartbeat)
-1. Conditions for running APP: networked status (performance mode needs to be turned on), an mqtt server with open port 1883, and two HoloCubic.
-2. Before using it for the first time, fill in the configuration on the Web page of ` WebServer App '. Role can choose 0 and 1 to represent the two HoloCubic interactions, respectively. Client_id is the unique identification of the device. Please set the two Holocubic to the same QQ number here. Mqtt_server fills in its own mqtt server address, and port fills in the port number. The user name and password depend on the specific server configuration.
-3. After setting up the heartbeat APP, turn on the automatic networking and open the mqtt client. Automatically enter the APP after receiving another HoloCubic message. Entering the APP in the normal way automatically sends a message to another HoloCubic.
-4. Update free services from time to time in the group. You can ask the management or group friends for specific configuration parameters.
+##### Heartbeat
+1. Running APP conditions: Connected state (performance mode needs to be enabled), an open MQTT server with port 1883, and two HoloCubics.
+2. Before using it for the first time, fill in the configuration on the `WebServer App` webpage. The role can be 0 or 1, representing the two interacting HoloCubics. The client_id is the unique identifier of the device. Here, set these two HoloCubics to the same QQ number. Fill in the address of your MQTT server in mqtt_server, and fill in the port number. The username and password depend on the specific server configuration.
+3. After setting the heartbeat app, it will automatically connect to the network and enable the MQTT client. After receiving a message from another HoloCubic, it will automatically enter the app. Entering the app normally will automatically send a message to another HoloCubic.
+4. The group occasionally updates free services. For specific configuration parameters, ask the admin or group members.
 
-Note: Remembrance Day and Heartbeat are reproduced from the [LizCubic] (https://github.com/qingehao/LizCubic) project. The program is written by ` WoodwindHu ` 
+Note: The anniversary and heartbeat are reproduced from the [LizCubic](https://github.com/qingehao/LizCubic) project. The program was written by `WoodwindHu`.
 
-##### Stock quotes in real time (Stock)
-1. Run APP condition: WiFi must be configured normally. To avoid restarting due to insufficient power during WiFi connection, please ensure that the USB port is fully powered.
-2. Before using it for the first time, modify the stock code you want on the Web page of WebServer App.
+##### Stock Market Real-time Viewing (Stock)
+1. Running APP conditions: WiFi must be configured normally. To avoid insufficient power during WiFi connection causing a restart, ensure sufficient USB port power supply.
+2. Before using it for the first time, modify the `stock code` you want on the `WebServer App` webpage.
 
-Note: The program is written by ` redwolf ` 
+Note: The program was written by `redwolf`.
 
-### About compiling engineering code
-1. This project code is based on the ESP32-Pico Arduino platform of PlatformIO plug-in on vcode. Specific tutorials can be found in Bilibili. Recommended Tutorial [https://b23.tv/kibhGD] (https://b23.tv/kibhGD)
-2. Remember to modify the ` upload_port 'field in the ` platformio.ini' file under the project to correspond to its own COMM port.
-3. At present, the latest version does not need to modify the SPI pins in the SPI library. A SPI library with modified SPI pins is placed separately under the ` lib ` of this project. The following are the actions of previous versions (negligible) 
+##### PC Resource Monitoring (PC Resource)
+1. Running conditions: WiFi must be configured normally. The PC and HoloCubic must be in the same subnet. Set the PC's service IP address in the `WebServer APP` (refer to the tutorial for details).
+2. Download [AIDA64](https://www.aida64.com/downloads), install AIDA64 on the PC, and import the configuration file `aida64_setting.rslcd` (located in the `AIO_Firmware_PIO\src\app\pc_resource` directory or in the group files).
 
-~~Then you need to modify an official library file to use it normally (otherwise, the memory card will fail to read):
-Both PlatformIO and ArduinoIDE users need to install the Arduino firmware support package of ESP32 (Baidu has a large number of tutorials). Either way, you need to modify the ` MISO ` default pin in the ` SPI ` library to ` 26 `, such as the package path of the arduinoIDE to ` esp32\ hardware\ esp32\ 1.0. 4\ libraries\ SPI\ src\ SPI.cpp ` file, **Modify the MISO to 26 in the following code**：~~
+Note: The specific operation steps are long, see the group document. This app was developed by `Jumping99`.
+
+##### Multi-functional Animation (LH&LXW)
+
+Download the firmware with the LH&LXW app for the transparent small TV, enter the system, select the LH&LXW app, tilt backward to enter the app, tilt forward to exit the app, and tilt left/right to select different functions, tilt backward to enter the selected function.
+
+【Function Description】
+
+Function 1: Code Rain; after entering this function - tilt left/right to switch the size of the code rain, tilt forward to exit this function.
+
+Function 2: Cyber Photo Album; after entering this function - tilt left to stop automatic switching, tilt right to resume automatic switching, tilt backward to switch between static and dynamic, tilt forward to exit this function.
+
+Before entering this function, ensure that your memory card contains the following files
+```
+1. ./LH&LXW/cyber/imgx.cyber stores the images to be displayed (x is 0~99)
+2. ./LH&LXW/cyber/cyber_num.txt stores the number of images to be displayed (00~99). For example, if there are 7 images, write 07
+Note: The number of images in ./LH&LXW/cyber/imgx.cyber must be equal to the number of image files entered by the user in ./LH&LXW/cyber/cyber_num.txt
+```
+The .cyber format image files are generated by the following python code:
+```python
+import cv2
+img_path = './123.jpg' # Input image path (image size must be 48x40)
+out_path = './123.cyber' # Output file path
+img = cv2.imread(img_path)
+img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+with open(out_path, 'wb') as f:
+    for a in img:
+        for b in a:
+            f.write(b)
+```
+
+Function 3: QQ Super Emoji; after entering this function - tilt left/right to select different emojis, tilt backward to play the current emoji, tilt forward to exit playback during playback, and tilt forward to exit this function when selecting emojis. During playback, it automatically loops for 33.3 seconds and then plays the next one. During playback, you can manually switch by tilting left/right.
+
+Before entering this function, ensure that your memory card contains the following files
+```
+1. ./LH&LXW/emoji/videos/videox.mjpeg stores the videos to be played (size 240x240) (x is 0~99)
+2. ./LH&LXW/emoji/images/imagex.bin stores the covers of the videos to be played (size 60x60) (x is 0~99)
+3. ./LH&LXW/emoji/emoji_num.txt stores the number of videos to be played (00~99). For example, if there are 7 videos, write 07
+
+Note: The number of videos in ./LH&LXW/emoji/videos/ must be equal to the number of covers in ./LH&LXW/emoji/images/ and must be equal to the number of videos entered by the user in ./LH&LXW/emoji/emoji_num.txt.
+```
+Function 4: Eyeball; after entering this function - tilt left/right to switch eye styles, tilt forward to exit this function.
+
+Function 5: Dynamic Heart; after entering this function - shake the small TV, and the particles forming the ♥ will also shake. After stopping shaking, the particles will gather into the shape of ♥ again, tilt forward to exit this function.
+
+APP demonstration video: [LVGL Menu #Transparent Small TV#LVGL Development] https://www.bilibili.com/video/BV1wK421173C/?share_source=copy_web&vd_source=68337adbea96c8cef50403a4b2809df6
+
+
+### About Compiling Project Code
+1. This project code is developed based on the ESP32-Pico Arduino platform in the PlatformIO plugin on vscode. You can find specific tutorials on `Bilibili`. Recommended tutorial: [https://b23.tv/kibhGD](https://b23.tv/kibhGD)
+2. Remember to modify the `upload_port` field in the `platformio.ini` file under the project to the corresponding COMM port.
+3. If you want to shield some built-in files, modify the corresponding `APP macro` in `AIO_Firmware_PIO\src\app\app_conf.h` to `0` to shield them.
+4. The latest version no longer requires you to modify the SPI pin in the SPI library. The `lib` directory of this project contains an SPI library with the SPI pin already modified. The following is the operation of the previous version (can be ignored)
+
+~~Then you need to modify an official library file to use it normally (otherwise it will cause the memory card to fail to read):
+Both PlatformIO and ArduinoIDE users need to install the ESP32 Arduino firmware support package (there are many tutorials on Baidu). Regardless of the development method, you need to modify the default MISO pin in the `SPI` library to `26`. For example, the package path of arduinoIDE is `esp32\hardware\esp32\1.0.4\libraries\SPI\src\SPI.cpp` file, **modify the following code to change MISO to 26**:~~
 ```
     if(sck == -1 && miso == -1 && mosi == -1 && ss == -1) {
         _sck = (_spi_num == VSPI) ? SCK : 14;
-        _miso = (_spi_num == VSPI) ? MISO : 12; // 需要改为26
+        _miso = (_spi_num == VSPI) ? MISO : 12; // Change to 26
         _mosi = (_spi_num == VSPI) ? MOSI : 13;
         _ss = (_spi_num == VSPI) ? SS : 15;
 ```
-~~This is because two hardware SPIs are used to connect the screen and SD card on the hardware, in which the default MISO pin of HSPI is 12, and 12 is used to set the flash level when powering up in ESP32. Pulling up before powering up will cause the chip to fail to start, so we replace the default pin with 26.~~
+~~This is because the screen and SD card are connected using two hardware SPIs, and the default MISO pin of HSPI is 12. In ESP32, 12 is used to set the flash level during power-on. Pulling it up before power-on will cause the chip to fail to start. Therefore, we replace the default pin with 26.~~
 
-### Program frame diagram 
+### Program Framework Diagram
 
 ![HoloCubic_AIO_Frame](Image/holocubic_AIO_Frame.png)
 
 ![HoloCubic_AIO_Frame](https://gitee.com/ClimbSnailQ/Project_Image/raw/master/OtherProject/holocubic_AIO_Frame.png)
 
-AIO framework explanation link https://www.bilibili.com/video/BV1jh411a7pV?P=4
+AIO framework explanation link: https://www.bilibili.com/video/BV1jh411a7pV?p=4
 
-You can pay attention to the design of UI by yourself `Edgeline`, `gui-guide` and other tools.
+For UI design, you can follow tools such as `Edgeline` and `gui-guider`.
 
-PlatformIO Simulator https://github.com/lvgl/lv_platformio
+PlatformIO simulator: https://github.com/lvgl/lv_platformio
 
-Application Icon (128*128): You can download Ali Vector Map https://www.iconfont.cn/
+Application icons (128*128): You can download vector icons from Alibaba: https://www.iconfont.cn/
 
-Error location code during debugging: ` xtensa-esp32-elf-addr2line-pfiaC-e firmware name. elf Backtrace address information `
+Error location code during debugging: `xtensa-esp32-elf-addr2line -pfiaC -e firmware_name.elf Backtrace address information`
 
-Learn about LVGL: 'http://lvgl.100ask.org', 'http://lvgl.100ask.net'
+For learning about lvgl, refer to: `http://lvgl.100ask.org`, `http://lvgl.100ask.net`
 
-Font generation for lvgl can be done using: ` LvglFontTool v0.4 ` already placed in the Doc directory
+Lvgl font generation can use: `LvglFontTool V0.4` placed in the Doc directory
 
-C file to extract all Chinese characters: You can use the project under the ` Script/get_font. py ` script extraction. ` Path to python get_font. py font. c file ` 
+Extract all Chinese characters in the c file: You can use the `Script/get_font.py` script in the project to extract. `python get_font.py path of the font.c file`
 
-### Acknowledgement
-* ESP32 Memory Distribution https://blog.csdn.net/espressif/article/details/112956403
-* Video playback https://github.com/moononournation/RGB565_video
-* FTP reference document https://blog.csdn.net/zhubao124/article/details/81662775
-* ESP32 arduino running dual-core https://www.yiboard.com/thread-1344-1-1.html
-* Mandatory Portal Authentication https://blog.csdn.net/xh870189248/article/details/102892766
-* Thanks to the authors of the open source libraries used in the `lib 'directory 
+### Acknowledgements
+* ESP32 memory distribution: https://blog.csdn.net/espressif/article/details/112956403
+* Video playback: https://github.com/moononournation/RGB565_video
+* FTP reference document: https://blog.csdn.net/zhubao124/article/details/81662775
+* ESP32 Arduino running dual-core: https://www.yiboard.com/thread-1344-1-1.html
+* Forced portal authentication: https://blog.csdn.net/xh870189248/article/details/102892766
+* Thanks to the authors of the open-source libraries used in the `lib` directory
+

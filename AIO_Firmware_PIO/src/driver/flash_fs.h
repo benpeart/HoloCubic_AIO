@@ -26,10 +26,10 @@ public:
 
     void deleteFile(const char *path);
 
-    // // 写入到多级递归文件路径中
+    // Write to multi-level recursive file path
     // void writeFile2(const char *path, const char *message);
 
-    // //删除多级递归文件
+    // Delete multi-level recursive file
     // void deleteFile2(const char *path);
 
 private:

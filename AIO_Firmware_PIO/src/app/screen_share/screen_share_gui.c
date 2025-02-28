@@ -32,14 +32,14 @@ void screen_share_gui_init(void)
 
 void display_share_init(void)
 {
-    lv_obj_t *act_obj = lv_scr_act(); // 获取当前活动页
+    lv_obj_t *act_obj = lv_scr_act(); // Get the current active screen
     // if (act_obj == share_main_scr)
     //     return;
 
-    lv_obj_clean(act_obj); // 清空此前页面
+    lv_obj_clean(act_obj); // Clear the previous screen
     screen_share_gui_del();
 
-    // 本地的ip地址
+    // Local IP address
     share_main_scr = lv_obj_create(NULL);
     lv_obj_add_style(share_main_scr, &default_style, LV_STATE_DEFAULT);
 
@@ -81,7 +81,7 @@ void screen_share_gui_del(void)
 {
     if (NULL != share_main_scr)
     {
-        lv_obj_clean(share_main_scr); // 清空此前页面
+        lv_obj_clean(share_main_scr); // Clear the previous screen
         share_main_scr = NULL;
         title_label = NULL;
         local_ip_label = NULL;
@@ -89,7 +89,7 @@ void screen_share_gui_del(void)
         info_label = NULL;
     }
 
-    // 手动清除样式，防止内存泄漏
+    // Manually clear styles to prevent memory leaks
     // lv_style_reset(&default_style);
     // lv_style_reset(&label_style);
 }

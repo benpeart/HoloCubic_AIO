@@ -3,14 +3,14 @@
 #include "esp_system.h"
 #include "esp_log.h"
 
-// 定义屏幕尺寸
+// Define screen size
 #define SCREEN_WIDTH 240
 #define SCREEN_HEIGHT 240
 
-// 贪吃蛇的最大长度
+// Maximum length of the snake
 #define SNAKE_SIZE 100
 
-// 贪吃蛇的数据结构
+// Snake data structure
 typedef struct
 {
     int x;
@@ -18,13 +18,13 @@ typedef struct
     lv_obj_t *body;
 } SnakeSegment;
 
-SnakeSegment snake[SNAKE_SIZE];  // 贪吃蛇的身体
-int snakeLength = 1;             // 贪吃蛇的长度
-bool gameOver = false;           // 游戏是否结束
-Direction direction = DIR_RIGHT; // 贪吃蛇的初始移动方向
+SnakeSegment snake[SNAKE_SIZE];  // Snake body
+int snakeLength = 1;             // Snake length
+bool gameOver = false;           // Game over status
+Direction direction = DIR_RIGHT; // Initial movement direction of the snake
 static int executed = 0;
 
-// 食物的位置
+// Food position
 int foodX;
 int foodY;
 
@@ -47,7 +47,7 @@ static lv_anim_t game_over_label_anim;
 
 void game_snake_gui_init(void)
 {
-    // 数据初始化
+    // Data initialization
     gameOver = false;
     generate_food();
     snake[0].x = foodX + 20;
@@ -57,28 +57,28 @@ void game_snake_gui_init(void)
     lv_style_init(&default_style);
     lv_style_set_bg_color(&default_style, lv_color_hex(0x000000));
 
-    lv_obj_t *act_obj = lv_scr_act(); // 获取当前活动页
+    lv_obj_t *act_obj = lv_scr_act(); // Get the current active screen
     if (act_obj == game_snake_gui)
         return;
-    lv_obj_clean(act_obj); // 清空此前页面
+    lv_obj_clean(act_obj); // Clear the previous screen
 
-    // 创建屏幕对象
+    // Create screen object
     game_snake_gui = lv_obj_create(NULL);
     lv_obj_add_style(game_snake_gui, &default_style, LV_STATE_DEFAULT);
 
-    // 贪吃蛇游戏区域绘制
+    // Draw the snake game area
     game_snake_area = lv_obj_create(game_snake_gui);
     lv_obj_set_size(game_snake_area, SCREEN_WIDTH, SCREEN_HEIGHT);
     lv_obj_align(game_snake_area, LV_ALIGN_CENTER, 0, 0);
     lv_obj_add_style(game_snake_area, &default_style, LV_STATE_DEFAULT);
 
-    // 得分区域绘制
+    // Draw the score area
     game_snake_score = lv_obj_create(game_snake_gui);
     lv_obj_set_size(game_snake_score, SCREEN_WIDTH, 40);
     lv_obj_align(game_snake_score, LV_ALIGN_BOTTOM_MID, 0, 0);
     lv_obj_add_style(game_snake_score, &default_style, LV_STATE_DEFAULT);
 
-    // 分数绘制
+    // Draw the score
     score_label = lv_label_create(game_snake_score);
     lv_label_set_text(score_label, "Score: 0");
     lv_obj_align(score_label, LV_ALIGN_CENTER, 0, 0);
@@ -87,7 +87,7 @@ void game_snake_gui_init(void)
     lv_style_set_text_font(&score_style, &lv_font_montserrat_24);
     lv_obj_add_style(score_label, &score_style, LV_STATE_DEFAULT);
 
-    // 创建贪吃蛇头部
+    // Create the snake head
     snake_head = lv_obj_create(game_snake_area);
     lv_obj_set_pos(snake_head, snake[0].x, snake[0].y);
     lv_obj_set_size(snake_head, 15, 15);
@@ -96,7 +96,7 @@ void game_snake_gui_init(void)
     lv_style_set_border_color(&head_style, lv_color_hex(0xffffff));
     lv_obj_add_style(snake_head, &head_style, LV_STATE_DEFAULT);
 
-    // 创建食物
+    // Create the food
     food = lv_obj_create(game_snake_area);
     lv_obj_set_pos(food, foodX, foodY);
     lv_obj_set_size(food, 15, 15);
@@ -105,13 +105,10 @@ void game_snake_gui_init(void)
     lv_style_set_border_color(&food_style, lv_color_hex(0xff0000));
     lv_obj_add_style(food, &food_style, LV_STATE_DEFAULT);
 
-    // 屏幕重载
+    // Reload the screen
     lv_scr_load(game_snake_gui);
 }
 
-/*
- * 其他函数请根据需要添加
- */
 void display_snake(int gameStatus, lv_scr_load_anim_t anim_type)
 {
     if (gameOver)
@@ -119,7 +116,7 @@ void display_snake(int gameStatus, lv_scr_load_anim_t anim_type)
         if (!executed)
         {
             executed = 1;
-            // 游戏结束label动画
+            // Game over label animation
             lv_anim_init(&game_over_label_anim);
             lv_anim_set_var(&game_over_label_anim, game_over_label);
             lv_anim_set_exec_cb(&game_over_label_anim, (lv_anim_exec_xcb_t)lv_obj_set_x);
@@ -134,7 +131,7 @@ void display_snake(int gameStatus, lv_scr_load_anim_t anim_type)
         return;
     }
 
-    // 移动贪吃蛇的身体
+    // Move the snake body
     for (int i = snakeLength - 1; i > 0; i--)
     {
         snake[i].x = snake[i - 1].x;
@@ -143,7 +140,7 @@ void display_snake(int gameStatus, lv_scr_load_anim_t anim_type)
             lv_obj_set_pos(snake[i].body, snake[i].x, snake[i].y);
     }
 
-    // 根据移动方向更新贪吃蛇的头部位置
+    // Update the snake head position based on the movement direction
     switch (direction)
     {
     case DIR_UP:
@@ -160,25 +157,25 @@ void display_snake(int gameStatus, lv_scr_load_anim_t anim_type)
         break;
     }
 
-    // 更新贪吃蛇头部的位置
+    // Update the snake head position
     lv_obj_set_pos(snake_head, snake[0].x, snake[0].y);
 
-    // 检测是否吃到食物
+    // Check if the snake eats the food
     if (snake[0].x == foodX && snake[0].y == foodY)
     {
-        // 增加贪吃蛇的长度
+        // Increase the snake length
         snakeLength++;
 
-        // 更新分数
+        // Update the score
         char score[20];
         sprintf(score, "Score: %d", snakeLength - 1);
         lv_label_set_text(score_label, score);
 
-        // 重新生成食物的位置
+        // Regenerate the food position
         generate_food();
         lv_obj_set_pos(food, foodX, foodY);
 
-        // 初始化新的身体部分
+        // Initialize the new body part
         snake[snakeLength - 1].x = snake[snakeLength - 2].x;
         snake[snakeLength - 1].y = snake[snakeLength - 2].y;
         snake[snakeLength - 1].body = lv_obj_create(game_snake_area);
@@ -190,11 +187,11 @@ void display_snake(int gameStatus, lv_scr_load_anim_t anim_type)
         lv_obj_add_style(snake[snakeLength - 1].body, &body_style, LV_STATE_DEFAULT);
     }
 
-    // 检测是否撞墙
+    // Check if the snake hits the wall
     if (snake[0].x < 0 || snake[0].x >= SCREEN_WIDTH - 30 || snake[0].y < 0 || snake[0].y >= SCREEN_HEIGHT - 70)
         gameOver = true;
 
-    // 检测是否撞到自己
+    // Check if the snake hits itself
     for (int i = 1; i < snakeLength; i++)
     {
         if (i > 3 && snake[0].x == snake[i].x && snake[0].y == snake[i].y)
@@ -206,7 +203,7 @@ void display_snake(int gameStatus, lv_scr_load_anim_t anim_type)
 
     if (gameOver)
     {
-        // 游戏结束
+        // Game over
         game_over_label = lv_label_create(game_snake_area);
         lv_label_set_text(game_over_label, "Game Over!");
         lv_obj_align(game_over_label, LV_ALIGN_CENTER, 0, 0);
@@ -219,8 +216,7 @@ void display_snake(int gameStatus, lv_scr_load_anim_t anim_type)
 
 void game_snake_gui_del(void)
 {
-
-    // 释放贪吃蛇的身体
+    // Release the snake body
     for (int i = 0; i < snakeLength; i++)
     {
         if (snake[i].body != NULL)
@@ -232,14 +228,14 @@ void game_snake_gui_del(void)
     snakeLength = 1;
     executed = 0;
 
-    // 释放贪吃蛇头部
+    // Release the snake head
     if (NULL != game_snake_gui)
     {
         lv_obj_clean(game_snake_gui);
         game_snake_gui = NULL;
     }
 
-    // 手动清除样式，防止内存泄漏
+    // Manually clear styles to prevent memory leaks
     lv_style_reset(&food_style);
     lv_style_reset(&body_style);
     lv_style_reset(&head_style);
@@ -248,17 +244,17 @@ void game_snake_gui_del(void)
     lv_style_reset(&default_style);
 }
 
-// 生成食物的位置
+// Generate the food position
 void generate_food()
 {
-    // 随机生成食物的位置
+    // Randomly generate the food position
     foodX = rand() % ((SCREEN_WIDTH - 30) / 10) * 10;
     foodY = rand() % ((SCREEN_HEIGHT - 70) / 10) * 10;
 }
 
-void update_driection(Direction dir)
+void update_direction(Direction dir)
 {
-    // 长度大于1时，不允许反向移动
+    // Do not allow reverse movement when the length is greater than 1
     if (snakeLength > 1)
     {
         switch (direction)
@@ -282,6 +278,6 @@ void update_driection(Direction dir)
         }
     }
 
-    // 更新移动方向
+    // Update the movement direction
     direction = dir;
 }

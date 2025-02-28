@@ -4,13 +4,13 @@
 IMU mpu;
 SdCard tf;
 Pixel rgb;
-// Config g_cfg;       // 全局配置文件
-Network g_network;  // 网络连接
-FlashFS g_flashCfg; // flash中的文件系统（替代原先的Preferences）
-Display screen;     // 屏幕对象
-Ambient ambLight;   // 光线传感器对象
+// Global configuration file
+Network g_network;  // Network connection
+FlashFS g_flashCfg; // File system in flash (replacing the original Preferences)
+Display screen;     // Screen object
+Ambient ambLight;   // Ambient light sensor object
 
-// lvgl handle的锁
+// lvgl handle lock
 SemaphoreHandle_t lvgl_mutex = xSemaphoreCreateMutex();
 
 boolean doDelayMillisTime(unsigned long interval, unsigned long *previousMillis, boolean state)

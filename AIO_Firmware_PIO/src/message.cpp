@@ -62,7 +62,7 @@ SettingsMsg::SettingsMsg(ACTION_TYPE action_type)
     m_msg_head.m_action_type = action_type;
     memset(m_prefs_name, 0, 15);
     memset(m_key, 0, 16);
-    m_value_type = VALUE_TYPE_UNKNOWN; // value值的类型
+    m_value_type = VALUE_TYPE_UNKNOWN; // Type of value
     memset(m_value, 0, 15);
 };
 
@@ -73,7 +73,7 @@ uint32_t SettingsMsg::decode(const uint8_t *msg)
         return 0;
     }
     uint32_t index = m_msg_head.decode(msg);
-    // setting数据的后面是以空格隔开的数据段 一般三段
+    // The data after setting is a space-separated data segment, generally three segments
     const char *p_ch = (const char *)msg + index;
     //
     strncpy(m_prefs_name, p_ch, 15);
@@ -89,7 +89,7 @@ uint32_t SettingsMsg::decode(const uint8_t *msg)
     m_value_type = (VALUE_TYPE)*p_ch;
     p_ch += 2;
 
-    // 解析值 value
+    // Parse value
     switch (m_value_type)
     {
     case VALUE_TYPE_INT:
@@ -123,7 +123,7 @@ uint32_t SettingsMsg::decode(const uint8_t *msg)
 
 uint32_t SettingsMsg::encode(uint8_t *msg)
 {
-    // msg最大长度为54字节
+    // The maximum length of msg is 54 bytes
     if (NULL == msg)
     {
         return false;
@@ -138,7 +138,7 @@ uint32_t SettingsMsg::encode(uint8_t *msg)
     m_value_type = (VALUE_TYPE)msg[index];
     index += 2;
 
-    // 解析值 value
+    // Parse value
     switch (m_value_type)
     {
     case VALUE_TYPE_INT:

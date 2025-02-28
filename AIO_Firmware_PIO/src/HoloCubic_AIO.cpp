@@ -1,9 +1,10 @@
 /***************************************************
-  HoloCubic多功能固件源码
-  （项目中若参考本工程源码，请注明参考来源）
+HoloCubic Multifunctional Firmware Source Code
+(If you reference this project's source code in your work, please cite the source.)
 
-  聚合多种APP，内置天气、时钟、相册、特效动画、视频播放、视频投影、
-  浏览器文件修改。（各APP具体使用参考说明书）
+Integrated with various apps including weather, clock, photo album, special
+effects animation, video playback, video projection, and browser file
+modification. (Refer to the manual for specific usage of each app.)
 
   Github repositories：https://github.com/ClimbSnail/HoloCubic_AIO
 
@@ -24,12 +25,13 @@
 
 bool isCheckAction = false;
 
-/*** Component objects **7*/
-ImuAction *act_info;           // 存放mpu6050返回的数据
-AppController *app_controller; // APP控制器
+/*** Component objects ***/
+ImuAction *act_info;           // Store data returned by mpu6050
+AppController *app_controller; // APP controller
 
 TaskHandle_t handleTaskLvgl;
 
+// Update display in parallel thread.
 void TaskLvglUpdate(void *parameter)
 {
     // ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
@@ -43,7 +45,7 @@ void TaskLvglUpdate(void *parameter)
 TimerHandle_t xTimerAction = NULL;
 void actionCheckHandle(TimerHandle_t xTimer)
 {
-    // 标志需要检测动作
+    // Flag requires detection action
     isCheckAction = true;
 }
 
@@ -59,17 +61,17 @@ void setup()
 
     Serial.println(F("\nAIO (All in one) version " AIO_VERSION "\n"));
     Serial.flush();
-    // MAC ID可用作芯片唯一标识
+    // MAC ID can be used as a unique chip identifier
     Serial.print(F("ChipID(EfuseMac): "));
     Serial.println(ESP.getEfuseMac());
-    // flash运行模式
+    // flash run mode
     // Serial.print(F("FlashChipMode: "));
     // Serial.println(ESP.getFlashChipMode());
     // Serial.println(F("FlashChipMode value: FM_QIO = 0, FM_QOUT = 1, FM_DIO = 2, FM_DOUT = 3, FM_FAST_READ = 4, FM_SLOW_READ = 5, FM_UNKNOWN = 255"));
 
-    app_controller = new AppController(); // APP控制器
+    app_controller = new AppController(); // APP controller
 
-    // 需要放在Setup里初始化
+    // Needs to be initialized in Setup
     if (!SPIFFS.begin(true))
     {
         Serial.println("SPIFFS Mount Failed");
@@ -79,7 +81,7 @@ void setup()
 #ifdef PEAK
     pinMode(CONFIG_BAT_CHG_DET_PIN, INPUT);
     pinMode(CONFIG_ENCODER_PUSH_PIN, INPUT_PULLUP);
-    /*电源使能保持*/
+    /* Power enable hold */
     Serial.println("Power: Waiting...");
     pinMode(CONFIG_POWER_EN_PIN, OUTPUT);
     digitalWrite(CONFIG_POWER_EN_PIN, LOW);
@@ -88,7 +90,7 @@ void setup()
     log_e("Power: ON");
 #endif
 
-    // config_read(NULL, &g_cfg);   // 旧的配置文件读取方式
+    // config_read(NULL, &g_cfg);   // Old configuration file reading method
     app_controller->read_config(&app_controller->sys_cfg);
     app_controller->read_config(&app_controller->mpu_cfg);
     app_controller->read_config(&app_controller->rgb_cfg);
@@ -132,7 +134,7 @@ void setup()
 
     app_controller->init();
 
-    // 将APP"安装"到controller里
+    // "Install" the APP into the controller
 #if APP_WEATHER_USE
     app_controller->app_install(&weather_app);
 #endif
@@ -187,10 +189,10 @@ void setup()
 #if APP_LHLXW_USE
     app_controller->app_install(&LHLXW_app);
 #endif
-    // 自启动APP
+    // Auto-start APP
     app_controller->app_auto_start();
 
-    // 优先显示屏幕 加快视觉上的开机时间
+    // Prioritize screen display to speed up visual boot time
     app_controller->main_process(&mpu.action_info);
 
     /*** Init IMU as input device ***/
@@ -198,23 +200,23 @@ void setup()
 
     mpu.init(app_controller->sys_cfg.mpu_order,
              app_controller->sys_cfg.auto_calibration_mpu,
-             &app_controller->mpu_cfg); // 初始化比较耗时
+             &app_controller->mpu_cfg); // Initialization is time-consuming
 
-    /*** 以此作为MPU6050初始化完成的标志 ***/
+    /*** Mark the completion of MPU6050 initialization ***/
     RgbConfig *rgb_cfg = &app_controller->rgb_cfg;
-    // 初始化RGB灯 HSV色彩模式
+    // Initialize RGB light in HSV color mode
     RgbParam rgb_setting = {LED_MODE_HSV,
                             rgb_cfg->min_value_0, rgb_cfg->min_value_1, rgb_cfg->min_value_2,
                             rgb_cfg->max_value_0, rgb_cfg->max_value_1, rgb_cfg->max_value_2,
                             rgb_cfg->step_0, rgb_cfg->step_1, rgb_cfg->step_2,
                             rgb_cfg->min_brightness, rgb_cfg->max_brightness,
                             rgb_cfg->brightness_step, rgb_cfg->time};
-    // 运行RGB任务
+    // Run RGB task
     set_rgb_and_run(&rgb_setting, RUN_MODE_TASK);
 
-    // 先初始化一次动作数据 防空指针
+    // Initialize action data to avoid null pointer
     act_info = mpu.getAction();
-    // 定义一个mpu6050的动作检测定时器
+    // Define an action detection timer for mpu6050
     xTimerAction = xTimerCreate("Action Check",
                                 200 / portTICK_PERIOD_MS,
                                 pdTRUE, (void *)0, actionCheckHandle);
@@ -226,7 +228,7 @@ void loop()
     screen.routine();
 
 #ifdef PEAK
-    // 适配稚晖君的PEAK
+    // Adapt to Zhihui Jun's PEAK
     if (!mpu.Encoder_GetIsPush())
     {
         Serial.println("mpu.Encoder_GetIsPush()1");
@@ -234,7 +236,7 @@ void loop()
         if (!mpu.Encoder_GetIsPush())
         {
             Serial.println("mpu.Encoder_GetIsPush()2");
-            // 适配Peak的关机功能
+            // Adapt to Peak's shutdown function
             digitalWrite(CONFIG_POWER_EN_PIN, LOW);
         }
     }
@@ -244,7 +246,7 @@ void loop()
         isCheckAction = false;
         act_info = mpu.getAction();
     }
-    app_controller->main_process(act_info); // 运行当前进程
+    app_controller->main_process(act_info); // Run the current process
     // Serial.println(ambLight.getLux() / 50.0);
     // rgb.setBrightness(ambLight.getLux() / 500.0);
 }

@@ -29,13 +29,13 @@ static lv_obj_t *spaceImg = NULL;
 
 static lv_chart_series_t *ser1, *ser2;
 
-// 天气图标路径的映射关系
+// Mapping relationship of weather icon paths
 const void *weaImage_map[] = {&weather_0, &weather_9, &weather_14, &weather_5, &weather_25,
                               &weather_30, &weather_26, &weather_11, &weather_23};
-// 太空人图标路径的映射关系
+// Mapping relationship of astronaut icon paths
 const void *manImage_map[] = {&man_0, &man_1, &man_2, &man_3, &man_4, &man_5, &man_6, &man_7, &man_8, &man_9};
-static const char weekDayCh[7][4] = {"日", "一", "二", "三", "四", "五", "六"};
-static const char airQualityCh[6][10] = {"优", "良", "轻度", "中度", "重度", "严重"};
+static const char weekDayCh[7][4] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+static const char airQualityCh[6][10] = {"Excellent", "Good", "Mild", "Moderate", "Severe", "Serious"};
 
 void weather_gui_init(void)
 {
@@ -63,7 +63,7 @@ void weather_gui_init(void)
     lv_style_set_bg_color(&bar_style, lv_color_hex(0x000000));
     lv_style_set_border_width(&bar_style, 2);
     lv_style_set_border_color(&bar_style, lv_color_hex(0xFFFFFF));
-    lv_style_set_pad_top(&bar_style, 1); // 指示器到背景四周的距离
+    lv_style_set_pad_top(&bar_style, 1); // Distance from the indicator to the background
     lv_style_set_pad_bottom(&bar_style, 1);
     lv_style_set_pad_left(&bar_style, 1);
     lv_style_set_pad_right(&bar_style, 1);
@@ -71,12 +71,12 @@ void weather_gui_init(void)
 
 void display_curve_init(lv_scr_load_anim_t anim_type)
 {
-    lv_obj_t *act_obj = lv_scr_act(); // 获取当前活动页
+    lv_obj_t *act_obj = lv_scr_act(); // Get the current active screen
     if (act_obj == scr_2)
         return;
 
     weather_gui_release();
-    lv_obj_clean(act_obj); // 清空此前页面
+    lv_obj_clean(act_obj); // Clear the previous screen
 
     scr_2 = lv_obj_create(NULL);
     lv_obj_add_style(scr_2, &default_style, LV_STATE_DEFAULT);
@@ -84,11 +84,11 @@ void display_curve_init(lv_scr_load_anim_t anim_type)
     titleLabel = lv_label_create(scr_2);
     lv_obj_add_style(titleLabel, &chFont_style, LV_STATE_DEFAULT);
     lv_label_set_recolor(titleLabel, true);
-    lv_label_set_text(titleLabel, "查看更多天气");
+    lv_label_set_text(titleLabel, "View More Weather");
 
     chart = lv_chart_create(scr_2);
     lv_obj_set_size(chart, 220, 180);
-    lv_chart_set_range(chart, LV_CHART_AXIS_PRIMARY_Y, -50, 50); // 设置进度条表示的温度为-50~50
+    lv_chart_set_range(chart, LV_CHART_AXIS_PRIMARY_Y, -50, 50); // Set the temperature range of the progress bar to -50~50
     lv_chart_set_point_count(chart, FORECAST_DAYS);
     lv_chart_set_div_line_count(chart, 5, FORECAST_DAYS);
     lv_chart_set_type(chart, LV_CHART_TYPE_LINE); /*Show lines and points too*/
@@ -98,12 +98,12 @@ void display_curve_init(lv_scr_load_anim_t anim_type)
 
     // lv_obj_set_style_pad_left(chart, 40, LV_STATE_DEFAULT);
 
-    // 设置Y轴上刻度线的数量
+    // Set the number of tick marks on the Y-axis
     // lv_chart_set_axis_tick(chart, LV_CHART_AXIS_PRIMARY_Y,
     //                        10, 5, 10, 2, true, 20);
     // lv_chart_set_zoom_y();
 
-    // 绘制
+    // Draw
     lv_obj_align(titleLabel, LV_ALIGN_TOP_MID, 0, 10);
     lv_obj_align(chart, LV_ALIGN_CENTER, 0, 10);
 
@@ -122,23 +122,23 @@ void display_curve(short maxT[], short minT[], lv_scr_load_anim_t anim_type)
     display_curve_init(anim_type);
     for (int Ti = 0; Ti < FORECAST_DAYS; ++Ti)
     {
-        ser1->y_points[Ti] = maxT[Ti] + 50; // 补偿50度
+        ser1->y_points[Ti] = maxT[Ti] + 50; // Compensate 50 degrees
     }
     for (int Ti = 0; Ti < FORECAST_DAYS; ++Ti)
     {
-        ser2->y_points[Ti] = minT[Ti] + 50; // 补偿50度
+        ser2->y_points[Ti] = minT[Ti] + 50; // Compensate 50 degrees
     }
     lv_chart_refresh(chart);
 }
 
 void display_weather_init(lv_scr_load_anim_t anim_type)
 {
-    lv_obj_t *act_obj = lv_scr_act(); // 获取当前活动页
+    lv_obj_t *act_obj = lv_scr_act(); // Get the current active screen
     if (act_obj == scr_1)
         return;
 
     weather_gui_release();
-    lv_obj_clean(act_obj); // 清空此前页面
+    lv_obj_clean(act_obj); // Clear the previous screen
 
     scr_1 = lv_obj_create(NULL);
     lv_obj_add_style(scr_1, &default_style, LV_STATE_DEFAULT);
@@ -164,13 +164,13 @@ void display_weather_init(lv_scr_load_anim_t anim_type)
 
     txtLabel = lv_label_create(scr_1);
     lv_obj_add_style(txtLabel, &chFont_style, LV_STATE_DEFAULT);
-    // lvgl8之前版本，模式一旦设置 LV_LABEL_LONG_SCROLL_CIRCULAR
-    // 宽度恒定等于当前文本的长度，所以下面先设置以下长度
-    lv_label_set_text(txtLabel, "最低气温12°C, ");
+    // Before lvgl8, once the mode is set to LV_LABEL_LONG_SCROLL_CIRCULAR
+    // The width is always equal to the length of the current text, so set the length below
+    lv_label_set_text(txtLabel, "Lowest temperature 12°C, ");
     lv_obj_set_size(txtLabel, 120, 30);
     lv_label_set_long_mode(txtLabel, LV_LABEL_LONG_SCROLL_CIRCULAR);
-    lv_label_set_text_fmt(txtLabel, "晴天, %s 0 级.   ", "风力");
-    // lv_label_set_text_fmt(txtLabel, "最低气温%d°C, 最高气温%d°C, %s%d 级.   ", 15, 20, "西北风", 0);
+    lv_label_set_text_fmt(txtLabel, "Sunny, %s 0 level.   ", "Wind");
+    // lv_label_set_text_fmt(txtLabel, "Lowest temperature %d°C, highest temperature %d°C, %s%d level.   ", 15, 20, "Northwest wind", 0);
 
     clockLabel_1 = lv_label_create(scr_1);
     lv_obj_add_style(clockLabel_1, &numberBig_style, LV_STATE_DEFAULT);
@@ -184,14 +184,14 @@ void display_weather_init(lv_scr_load_anim_t anim_type)
 
     dateLabel = lv_label_create(scr_1);
     lv_obj_add_style(dateLabel, &chFont_style, LV_STATE_DEFAULT);
-    lv_label_set_text_fmt(dateLabel, "%2d月%2d日   周%s", 11, 23, weekDayCh[1]);
+    lv_label_set_text_fmt(dateLabel, "%2d month %2d day   Week %s", 11, 23, weekDayCh[1]);
 
     tempImg = lv_img_create(scr_1);
     lv_img_set_src(tempImg, &temp);
     lv_img_set_zoom(tempImg, 180);
     tempBar = lv_bar_create(scr_1);
     lv_obj_add_style(tempBar, &bar_style, LV_STATE_DEFAULT);
-    lv_bar_set_range(tempBar, -50, 50); // 设置进度条表示的温度为-50~50
+    lv_bar_set_range(tempBar, -50, 50); // Set the temperature range of the progress bar to -50~50
     lv_obj_set_size(tempBar, 60, 12);
     lv_obj_set_style_bg_color(tempBar, lv_palette_main(LV_PALETTE_RED), LV_PART_INDICATOR);
     lv_bar_set_value(tempBar, 10, LV_ANIM_ON);
@@ -212,11 +212,11 @@ void display_weather_init(lv_scr_load_anim_t anim_type)
     lv_obj_add_style(humiLabel, &chFont_style, LV_STATE_DEFAULT);
     lv_label_set_text(humiLabel, "50%");
 
-    // 太空人图标
+    // Astronaut icon
     spaceImg = lv_img_create(scr_1);
     lv_img_set_src(spaceImg, manImage_map[0]);
 
-    // 绘制图形
+    // Draw graphics
     lv_obj_align(weatherImg, LV_ALIGN_TOP_RIGHT, -10, 10);
     // lv_obj_align(cityLabel, LV_ALIGN_TOP_LEFT, 20, 15);
     lv_obj_align(cityLabel, LV_ALIGN_TOP_LEFT, 20, 25);
@@ -259,10 +259,10 @@ void display_weather(struct Weather weaInfo, lv_scr_load_anim_t anim_type)
     }
     lv_label_set_text(airQualityLabel, airQualityCh[weaInfo.airQulity]);
     lv_img_set_src(weatherImg, weaImage_map[weaInfo.weather_code]);
-    // 下面这行代码可能会出错
-    // lv_label_set_text_fmt(txtLabel, "最低气温%d°C, 最高气温%d°C, %s%d 级.   ",
+    // The following line of code may cause an error
+    // lv_label_set_text_fmt(txtLabel, "Lowest temperature %d°C, highest temperature %d°C, %s%d level.   ",
     //                       weaInfo.minTemp, weaInfo.maxTemp, weaInfo.windDir, weaInfo.windLevel);
-    lv_label_set_text_fmt(txtLabel, "   今日天气:%s, %s风%s级.              ",
+    lv_label_set_text_fmt(txtLabel, "   Today's weather: %s, %s wind %s level.              ",
                           weaInfo.weather, weaInfo.windDir, weaInfo.windpower);
 
     lv_bar_set_value(tempBar, weaInfo.temperature, LV_ANIM_ON);
@@ -270,7 +270,7 @@ void display_weather(struct Weather weaInfo, lv_scr_load_anim_t anim_type)
     lv_bar_set_value(humiBar, weaInfo.humidity, LV_ANIM_ON);
     lv_label_set_text_fmt(humiLabel, "%d%%", weaInfo.humidity);
 
-    // // 绘制图形
+    // // Draw graphics
     // lv_obj_align(weatherImg, NULL, LV_ALIGN_TOP_RIGHT, -10, 10);
     // lv_obj_align(cityLabel, NULL, LV_ALIGN_TOP_LEFT, 20, 15);
     // lv_obj_align(txtLabel, NULL, LV_ALIGN_TOP_LEFT, 0, 50);
@@ -297,7 +297,7 @@ void display_time(struct TimeStr timeInfo, lv_scr_load_anim_t anim_type)
     display_weather_init(anim_type);
     lv_label_set_text_fmt(clockLabel_1, "%02d#ffa500 %02d#", timeInfo.hour, timeInfo.minute);
     lv_label_set_text_fmt(clockLabel_2, "%02d", timeInfo.second);
-    lv_label_set_text_fmt(dateLabel, "%2d月%2d日   周%s", timeInfo.month, timeInfo.day,
+    lv_label_set_text_fmt(dateLabel, "%2d month %2d day   Week %s", timeInfo.month, timeInfo.day,
                           weekDayCh[timeInfo.weekday]);
 
     // lv_obj_align(clockLabel_1, NULL, LV_ALIGN_LEFT_MID, 0, 10);
@@ -352,7 +352,7 @@ void weather_gui_del(void)
 {
     weather_gui_release();
 
-    // 手动清除样式，防止内存泄漏
+    // Manually clear styles to prevent memory leaks
     // lv_style_reset(&default_style);
     // lv_style_reset(&chFont_style);
     // lv_style_reset(&numberSmall_style);

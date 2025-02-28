@@ -6,24 +6,24 @@
 #include "network.h"
 #include "common.h"
 
-#define SERVER_REFLUSH_INTERVAL 5000UL // 配置界面重新刷新时间(5s)
-#define DNS_PORT 53                    // DNS端口
+#define SERVER_REFLUSH_INTERVAL 5000UL // Configuration page refresh interval (5s)
+#define DNS_PORT 53                    // DNS port
 WebServer server(80);
 
 // DNSServer dnsServer;
 
 struct ServerAppRunData
 {
-    boolean web_start;                    // 标志是否开启web server服务，0为关闭 1为开启
-    boolean req_sent;                     // 标志是否发送wifi请求服务，0为关闭 1为开启
-    unsigned long serverReflushPreMillis; // 上一回更新的时间
+    boolean web_start;                    // Flag to indicate whether the web server service is started, 0 for off, 1 for on
+    boolean req_sent;                     // Flag to indicate whether the WiFi request service is sent, 0 for off, 1 for on
+    unsigned long serverReflushPreMillis; // Time of the last update
 };
 
 static ServerAppRunData *run_data = NULL;
 
 void start_web_config()
 {
-    // 首页
+    // Home page
     server.on("/", HTTP_GET, HomePage);
 
     init_page_header();
@@ -72,7 +72,7 @@ void start_web_config()
         { server.send(200); },
         handleFileUpload);
 
-    // 连接
+    // Connection
     server.on("/saveSysConf", saveSysConf);
     server.on("/saveRgbConf", saveRgbConf);
 #if APP_WEATHER_USE
@@ -124,7 +124,7 @@ void stop_web_config()
 static int server_init(AppController *sys)
 {
     server_gui_init();
-    // 初始化运行时参数
+    // Initialize runtime parameters
     run_data = (ServerAppRunData *)malloc(sizeof(ServerAppRunData));
     run_data->web_start = 0;
     run_data->req_sent = 0;
@@ -146,25 +146,25 @@ static void server_process(AppController *sys,
 
     if (0 == run_data->web_start && 0 == run_data->req_sent)
     {
-        // 预显示
+        // Pre-display
         display_setting(
             "WebServer Start",
             "Domain: holocubic",
             "Wait...", "Wait...",
             // "", "",
             LV_SCR_LOAD_ANIM_NONE);
-        // 如果web服务没有开启 且 ap开启的请求没有发送 message这边没有作用（填0）
+        // If the web service is not started and the AP start request is not sent, message here has no effect (fill 0)
         sys->send_to(SERVER_APP_NAME, CTRL_NAME,
                      APP_MESSAGE_WIFI_AP, NULL, NULL);
-        run_data->req_sent = 1; // 标志为 ap开启请求已发送
+        run_data->req_sent = 1; // Mark the AP start request as sent
     }
     else if (1 == run_data->web_start)
     {
-        server.handleClient(); // 一定需要放在循环里扫描
+        server.handleClient(); // Must be placed in the loop to scan
         // dnsServer.processNextRequest();
         if (doDelayMillisTime(SERVER_REFLUSH_INTERVAL, &run_data->serverReflushPreMillis, false) == true)
         {
-            // 发送wifi维持的心跳
+            // Send WiFi keep-alive heartbeat
             sys->send_to(SERVER_APP_NAME, CTRL_NAME,
                          APP_MESSAGE_WIFI_ALIVE, NULL, NULL);
 
@@ -181,15 +181,15 @@ static void server_process(AppController *sys,
 static void server_background_task(AppController *sys,
                                    const ImuAction *act_info)
 {
-    // 本函数为后台任务，主控制器会间隔一分钟调用此函数
-    // 本函数尽量只调用"常驻数据",其他变量可能会因为生命周期的缘故已经释放
+    // This function is a background task, the main controller will call this function every minute
+    // This function should try to only call "resident data", other variables may have been released due to lifecycle reasons
 }
 
 static int server_exit_callback(void *param)
 {
     setting_gui_del();
 
-    // 释放运行数据
+    // Release runtime data
     if (NULL != run_data)
     {
         free(run_data);
@@ -219,7 +219,7 @@ static void server_message_handle(const char *from, const char *to,
     break;
     case APP_MESSAGE_WIFI_ALIVE:
     {
-        // wifi心跳维持的响应 可以不做任何处理
+        // WiFi keep-alive response, no need to handle
     }
     break;
     default:

@@ -1,10 +1,9 @@
-
 #define NEW_FLASH_FS
 #ifndef NEW_FLASH_FS
 
 /***************************************************
-  由于使用了新的文件系统，config.cpp/config.h中实现的功能
-已被摒弃，为留作参考故未删除代码。
+  Since a new file system is used, the functions implemented in config.cpp/config.h
+have been deprecated and the code is retained for reference.
 
   Github repositories：https://github.com/ClimbSnail/HoloCubic_AIO
 
@@ -16,7 +15,7 @@
 #include <WString.h>
 #include <Preferences.h>
 
-extern Preferences prefs;       // 声明Preferences对象
+extern Preferences prefs;       // Declare Preferences object
 
 struct MPU_Config
 {
@@ -33,18 +32,18 @@ struct Config
 {
     String ssid;
     String password;
-    String cityname;              // 显示的城市
-    String language;              // 天气查询的地址编码
-    String weather_key;           // 知心天气api_key（秘钥）
-    String tianqi_appid;          // tianqiapid 的 appid
-    String tianqi_appsecret;      // tianqiapid 的 appsecret
-    String tianqi_addr;           // tianqiapid 的地址（填中文）
-    String bili_uid;              // bilibili的uid
-    uint8_t backLight;            // 屏幕亮度（1-100）
-    uint8_t rotation;             // 屏幕旋转方向
-    uint8_t auto_calibration_mpu; // 是否自动校准陀螺仪 0关闭自动校准 1打开自动校准
+    String cityname;              // Displayed city
+    String language;              // Address code for weather query
+    String weather_key;           // Zhixin weather api_key (secret key)
+    String tianqi_appid;          // tianqiapid's appid
+    String tianqi_appsecret;      // tianqiapid's appsecret
+    String tianqi_addr;           // tianqiapid's address (fill in Chinese)
+    String bili_uid;              // bilibili's uid
+    uint8_t backLight;            // Screen brightness (1-100)
+    uint8_t rotation;             // Screen rotation direction
+    uint8_t auto_calibration_mpu; // Whether to automatically calibrate the gyroscope: 0 to disable automatic calibration, 1 to enable automatic calibration
     uint8_t mpu_order;
-    MPU_Config mpu_config; // 保存mup的校准数据
+    MPU_Config mpu_config; // Save the calibration data of the mpu
 };
 
 void config_read(const char *file_path, Config *cfg);

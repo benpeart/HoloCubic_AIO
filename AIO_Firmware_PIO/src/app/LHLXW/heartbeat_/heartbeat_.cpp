@@ -5,14 +5,14 @@
 
 
 /*
-功能：动态心
-参考了fzjpxlay up主的代码！
-以及他分享的粒子动画网页https://openprocessing.org/sketch/1906399
-上述网站可以称之为粒子动画神仙网站，上面有很多惊艳的粒子动画特效
+Function: Dynamic Heart
+Referenced the code of fzjpxlay up master!
+And the particle animation webpage he shared https://openprocessing.org/sketch/1906399
+The above website can be called a god-level particle animation website, with many stunning particle animation effects
 */
 
 
-/* 系统变量 */
+/* System variables */
 extern bool isCheckAction;
 extern ImuAction *act_info;
 
@@ -43,7 +43,7 @@ static uint16_t randomColorHSV(int hmin,int hmax,int smin,int smax,int vmin,int 
     return (lv_color_to8(c));
 }
 
-/*********填充圆用到的工具函数********/
+/*********Utility functions for filling circles********/
 static void heartbeatBuf_draw_fastVLine(int16_t x, int16_t y, int16_t length, uint16_t color){
     int16_t y0 = y;
     do{
@@ -82,10 +82,10 @@ static void heartbeatBuf_fill_circle(int16_t x0, int16_t y0, int16_t r, uint16_t
     heartbeatBuf_fillCircle_helper(x0, y0, r, 3, 0, color);
 }
 
-#define CIRCLE_TOTAL 81         //粒子总数
-#define VISCOSITY 0.95       //粘性系数
-#define CIRCLE_SIZE 250         //粒子大小
-/* 在此文件中，在类中写函数会报错 */
+#define CIRCLE_TOTAL 81         //Total number of particles
+#define VISCOSITY 0.95       //Viscosity coefficient
+#define CIRCLE_SIZE 250         //Particle size
+/* Writing functions in the class in this file will cause errors */
 struct heartCircle {
     float xPos;
     float yPos;
@@ -105,7 +105,7 @@ static void circle_draw(heartCircle *c){
 }
 
 
-heartCircle *h_circles = NULL; //组成心的圆
+heartCircle *h_circles = NULL; //Circles that make up the heart
 
 
 static float _absF(float a){
@@ -153,7 +153,7 @@ static void heartbeatBuf_update(float accXinc, float accYinc){
 
 
 void heartbeat_init(void){
-    heartbeatBuf = (uint8_t *)malloc(240 * 240); //动态分配一块屏幕分辨率大小的空间
+    heartbeatBuf = (uint8_t *)malloc(240 * 240); //Dynamically allocate a space the size of the screen resolution
     if(heartbeatBuf == NULL){
         Serial.println("1:lack of memory");
         while(1);
@@ -176,12 +176,12 @@ void heartbeat_init(void){
 }
 
 void heartbeat_process(lv_obj_t *ym){
-    /*实现丝滑切换*/
+    /* Smooth transition */
     lv_obj_t *obj = lv_obj_create(NULL);
     lv_obj_set_style_bg_color(obj,lv_color_hex(0),LV_STATE_DEFAULT);
     lv_scr_load_anim(obj, LV_SCR_LOAD_ANIM_OUT_BOTTOM, 573, 0, false);
     for(uint16_t i=0;i<573;i++){
-        lv_timer_handler();//让LVGL更新屏幕，让操作者可以看到已执行动作
+        lv_timer_handler();//Let LVGL update the screen so the operator can see the executed actions
         delay(1);//
     }
 
@@ -189,14 +189,14 @@ void heartbeat_process(lv_obj_t *ym){
     float accYinc = 0;
     heartbeat_init();
     while(1){
-        /* MPU6050数据获取 */
+        /* MPU6050 data acquisition */
         if (isCheckAction){
             isCheckAction = false;
             act_info = mpu.getAction();
         }
         accXinc = 0;
         accYinc = 0;
-        /* MPU6050动作响应 */
+        /* MPU6050 action response */
         if (RETURN == act_info->active){
             break;
         }else if(TURN_RIGHT == act_info->active){
@@ -214,19 +214,19 @@ void heartbeat_process(lv_obj_t *ym){
         }
         act_info->active = ACTIVE_TYPE::UNKNOWN;
         act_info->isValid = 0;
-        heartbeatBuf_clear(0x0000);//清屏，以黑色作为背景 
-        heartbeatBuf_update(accXinc,accYinc); // ui更新//最终所有的特效调用都在这里面
-        tft->pushImage(0, 0, 240, 240, heartbeatBuf);//显示图像
+        heartbeatBuf_clear(0x0000);//Clear the screen with black as the background
+        heartbeatBuf_update(accXinc,accYinc); // UI update, all effects are ultimately called here
+        tft->pushImage(0, 0, 240, 240, heartbeatBuf);//Display image
         delay(2);    
     }
     free(h_circles);
     free(heartbeatBuf);
 
-    lv_scr_load_anim(ym, LV_SCR_LOAD_ANIM_OUT_TOP, 573, 0, false);//调用系统退出函数之前，一定要等待动画结束否则会导致系统重启
-    lv_obj_invalidate(lv_scr_act());//哪怕缓存没变，也让lvgl下次更新全部屏幕
-    /* 延时999ms，防止同时退出app */
+    lv_scr_load_anim(ym, LV_SCR_LOAD_ANIM_OUT_TOP, 573, 0, false);//Be sure to wait for the animation to finish before calling the system exit function, otherwise it will cause the system to restart
+    lv_obj_invalidate(lv_scr_act());//Even if the cache has not changed, let lvgl update the entire screen next time
+    /* Delay 999ms to prevent simultaneous exit from the app */
     for(uint16_t i=0;i<898+500;i++){
-        lv_timer_handler();//让LVGL更新屏幕，让操作者可以看到已执行动作
+        lv_timer_handler();//Let LVGL update the screen so the operator can see the executed actions
         delay(1);//
     }
     lv_obj_clean(obj);

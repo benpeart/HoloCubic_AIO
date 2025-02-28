@@ -1,5 +1,4 @@
-
-// 参考代码 https://github.com/G6EJD/ESP32-8266-File-Upload
+// Reference code https://github.com/G6EJD/ESP32-8266-File-Upload
 
 #include "network.h"
 #include "common.h"
@@ -52,83 +51,83 @@ String file_size(int bytes)
                    ".input .radio {height: 30px;width: 50px;}"                                          \
                    ".btn {width: 120px;height: 35px;background-color: #000000;border: 0px;color: #ffffff;margin-top: 15px;margin-left: auto;}" // margin-left: 100px;
 
-#define SYS_SETTING "<form method=\"GET\" action=\"saveSysConf\">"                                                                                                                                                                                                      \
-                    "<label class=\"input\"><span>WiFi SSID_0(2.4G)</span><input type=\"text\"name=\"ssid_0\"value=\"%s\"></label>"                                                                                                                                     \
-                    "<label class=\"input\"><span>WiFi Passwd_0</span><input type=\"text\"name=\"password_0\"value=\"%s\"></label>"                                                                                                                                     \
-                    "<label class=\"input\"><span>功耗控制（0低发热 1性能优先）</span><input type=\"text\"name=\"power_mode\"value=\"%s\"></label>"                                                                                                        \
-                    "<label class=\"input\"><span>屏幕亮度 (值为1~100)</span><input type=\"text\"name=\"backLight\"value=\"%s\"></label>"                                                                                                                         \
-                    "<label class=\"input\"><span>屏幕方向 (0~5可选)</span><input type=\"text\"name=\"rotation\"value=\"%s\"></label>"                                                                                                                            \
-                    "<label class=\"input\"><span>操作方向（0~15可选）</span><input type=\"text\"name=\"mpu_order\"value=\"%s\"></label>"                                                                                                                       \
-                    "<label class=\"input\"><span>MPU6050自动校准</span><input class=\"radio\" type=\"radio\" value=\"0\" name=\"auto_calibration_mpu\" %s>关闭<input class=\"radio\" type=\"radio\" value=\"1\" name=\"auto_calibration_mpu\" %s>开启</label>" \
-                    "<label class=\"input\"><span>开机自启的APP名字（如 Weather ）</span><input type=\"text\"name=\"auto_start_app\"value=\"%s\"></label>"                                                                                                                      \
-                    "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"保存\"></form>"
+#define SYS_SETTING "<form method=\"GET\" action=\"saveSysConf\">"                                                                                                                                                                                                    \
+                    "<label class=\"input\"><span>WiFi SSID_0(2.4G)</span><input type=\"text\"name=\"ssid_0\"value=\"%s\"></label>"                                                                                                                                   \
+                    "<label class=\"input\"><span>WiFi Passwd_0</span><input type=\"text\"name=\"password_0\"value=\"%s\"></label>"                                                                                                                                   \
+                    "<label class=\"input\"><span>Power Control (0 Low Heat 1 Performance Priority)</span><input type=\"text\"name=\"power_mode\"value=\"%s\"></label>"                                                                                               \
+                    "<label class=\"input\"><span>Screen Brightness (Value 1~100)</span><input type=\"text\"name=\"backLight\"value=\"%s\"></label>"                                                                                                                  \
+                    "<label class=\"input\"><span>Screen Orientation (0~5 Optional)</span><input type=\"text\"name=\"rotation\"value=\"%s\"></label>"                                                                                                                 \
+                    "<label class=\"input\"><span>Operation Direction (0~15 Optional)</span><input type=\"text\"name=\"mpu_order\"value=\"%s\"></label>"                                                                                                              \
+                    "<label class=\"input\"><span>MPU6050 Auto Calibration</span><input class=\"radio\" type=\"radio\" value=\"0\" name=\"auto_calibration_mpu\" %s>Off<input class=\"radio\" type=\"radio\" value=\"1\" name=\"auto_calibration_mpu\" %s>On</label>" \
+                    "<label class=\"input\"><span>Auto Start APP Name (e.g. Weather)</span><input type=\"text\"name=\"auto_start_app\"value=\"%s\"></label>"                                                                                                          \
+                    "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"Save\"></form>"
 
-#define RGB_SETTING "<form method=\"GET\" action=\"saveRgbConf\">"                                                                                          \
-                    "<label class=\"input\"><span>RGB最低亮度（0~1000可选）</span><input type=\"text\"name=\"min_brightness\"value=\"%s\"></label>" \
-                    "<label class=\"input\"><span>RGB最高亮度（0~1000可选）</span><input type=\"text\"name=\"max_brightness\"value=\"%s\"></label>" \
-                    "<label class=\"input\"><span>RGB渐变时间（10~1000可选）</span><input type=\"text\"name=\"time\"value=\"%s\"></label>"        \
-                    "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"保存\"></form>"
+#define RGB_SETTING "<form method=\"GET\" action=\"saveRgbConf\">"                                                                                                 \
+                    "<label class=\"input\"><span>RGB Minimum Brightness (0~1000 Optional)</span><input type=\"text\"name=\"min_brightness\"value=\"%s\"></label>" \
+                    "<label class=\"input\"><span>RGB Maximum Brightness (0~1000 Optional)</span><input type=\"text\"name=\"max_brightness\"value=\"%s\"></label>" \
+                    "<label class=\"input\"><span>RGB Gradient Time (10~1000 Optional)</span><input type=\"text\"name=\"time\"value=\"%s\"></label>"               \
+                    "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"Save\"></form>"
 
-#define WEATHER_SETTING "<form method=\"GET\" action=\"saveWeatherConf\">"                                                                                          \
-                        "<label class=\"input\"><span>TianQi Url</span><input type=\"text\"name=\"tianqi_url\"value=\"%s\"></label>"                                \
-                        "<label class=\"input\"><span>城市名（或填6位城市代码）</span><input type=\"text\"name=\"tianqi_city_code\"value=\"%s\"></label>"   \
-                        "<label class=\"input\"><span>API的个人Key</span><input type=\"text\"name=\"tianqi_api_key\"value=\"%s\"></label>"                         \
-                        "<label class=\"input\"><span>天气更新周期（毫秒）</span><input type=\"text\"name=\"weatherUpdataInterval\"value=\"%s\"></label>" \
-                        "<label class=\"input\"><span>日期更新周期（毫秒）</span><input type=\"text\"name=\"timeUpdataInterval\"value=\"%s\"></label>"    \
-                        "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"保存\"></form>"
+#define WEATHER_SETTING "<form method=\"GET\" action=\"saveWeatherConf\">"                                                                                               \
+                        "<label class=\"input\"><span>TianQi Url</span><input type=\"text\"name=\"tianqi_url\"value=\"%s\"></label>"                                     \
+                        "<label class=\"input\"><span>City Name (or fill in 6-digit city code)</span><input type=\"text\"name=\"tianqi_city_code\"value=\"%s\"></label>" \
+                        "<label class=\"input\"><span>API Personal Key</span><input type=\"text\"name=\"tianqi_api_key\"value=\"%s\"></label>"                           \
+                        "<label class=\"input\"><span>Weather Update Interval (ms)</span><input type=\"text\"name=\"weatherUpdataInterval\"value=\"%s\"></label>"        \
+                        "<label class=\"input\"><span>Date Update Interval (ms)</span><input type=\"text\"name=\"timeUpdataInterval\"value=\"%s\"></label>"              \
+                        "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"Save\"></form>"
 
-#define WEATHER_OLD_SETTING "<form method=\"GET\" action=\"saveWeatherOldConf\">"                                                                                       \
-                            "<label class=\"input\"><span>知心天气 城市名（拼音）</span><input type=\"text\"name=\"cityname\"value=\"%s\"></label>"          \
-                            "<label class=\"input\"><span>City Language(zh-Hans)</span><input type=\"text\"name=\"language\"value=\"%s\"></label>"                      \
-                            "<label class=\"input\"><span>Weather Key</span><input type=\"text\"name=\"weather_key\"value=\"%s\"></label>"                              \
-                            "<label class=\"input\"><span>天气更新周期（毫秒）</span><input type=\"text\"name=\"weatherUpdataInterval\"value=\"%s\"></label>" \
-                            "<label class=\"input\"><span>日期更新周期（毫秒）</span><input type=\"text\"name=\"timeUpdataInterval\"value=\"%s\"></label>"    \
-                            "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"保存\"></form>"
+#define WEATHER_OLD_SETTING "<form method=\"GET\" action=\"saveWeatherOldConf\">"                                                                                     \
+                            "<label class=\"input\"><span>ZhiXin Weather City Name (Pinyin)</span><input type=\"text\"name=\"cityname\"value=\"%s\"></label>"         \
+                            "<label class=\"input\"><span>City Language (zh-Hans)</span><input type=\"text\"name=\"language\"value=\"%s\"></label>"                   \
+                            "<label class=\"input\"><span>Weather Key</span><input type=\"text\"name=\"weather_key\"value=\"%s\"></label>"                            \
+                            "<label class=\"input\"><span>Weather Update Interval (ms)</span><input type=\"text\"name=\"weatherUpdataInterval\"value=\"%s\"></label>" \
+                            "<label class=\"input\"><span>Date Update Interval (ms)</span><input type=\"text\"name=\"timeUpdataInterval\"value=\"%s\"></label>"       \
+                            "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"Save\"></form>"
 
-#define BILIBILI_SETTING "<form method=\"GET\" action=\"saveBiliConf\">"                                                                                      \
-                         "<label class=\"input\"><span>Bili UID</span><input type=\"text\"name=\"bili_uid\"value=\"%s\"></label>"                             \
-                         "<label class=\"input\"><span>数据更新周期（毫秒）</span><input type=\"text\"name=\"updataInterval\"value=\"%s\"></label>" \
-                         "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"保存\"></form>"
+#define BILIBILI_SETTING "<form method=\"GET\" action=\"saveBiliConf\">"                                                                                 \
+                         "<label class=\"input\"><span>Bili UID</span><input type=\"text\"name=\"bili_uid\"value=\"%s\"></label>"                        \
+                         "<label class=\"input\"><span>Data Update Interval (ms)</span><input type=\"text\"name=\"updataInterval\"value=\"%s\"></label>" \
+                         "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"Save\"></form>"
 
-#define STOCK_SETTING "<form method=\"GET\" action=\"saveStockConf\">"                                                                                          \
-                      "<label class=\"input\"><span>股票代码,例如：sz000001或sh601126</span><input type=\"text\"name=\"stock_id\"value=\"%s\"></label>" \
-                      "<label class=\"input\"><span>数据更新周期（毫秒）</span><input type=\"text\"name=\"updataInterval\"value=\"%s\"></label>"      \
-                      "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"保存\"></form>"
+#define STOCK_SETTING "<form method=\"GET\" action=\"saveStockConf\">"                                                                                       \
+                      "<label class=\"input\"><span>Stock Code, e.g.: sz000001 or sh601126</span><input type=\"text\"name=\"stock_id\"value=\"%s\"></label>" \
+                      "<label class=\"input\"><span>Data Update Interval (ms)</span><input type=\"text\"name=\"updataInterval\"value=\"%s\"></label>"        \
+                      "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"Save\"></form>"
 
-#define PICTURE_SETTING "<form method=\"GET\" action=\"savePictureConf\">"                                                                                         \
-                        "<label class=\"input\"><span>自动切换时间间隔（毫秒）</span><input type=\"text\"name=\"switchInterval\"value=\"%s\"></label>" \
-                        "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"保存\"></form>"
+#define PICTURE_SETTING "<form method=\"GET\" action=\"savePictureConf\">"                                                                              \
+                        "<label class=\"input\"><span>Auto Switch Interval (ms)</span><input type=\"text\"name=\"switchInterval\"value=\"%s\"></label>" \
+                        "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"Save\"></form>"
 
-#define MEDIA_SETTING "<form method=\"GET\" action=\"saveMediaConf\">"                                                                                             \
-                      "<label class=\"input\"><span>自动切换（0不切换 1自动切换）</span><input type=\"text\"name=\"switchFlag\"value=\"%s\"></label>" \
-                      "<label class=\"input\"><span>功耗控制（0低发热 1性能优先）</span><input type=\"text\"name=\"powerFlag\"value=\"%s\"></label>"  \
-                      "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"保存\"></form>"
+#define MEDIA_SETTING "<form method=\"GET\" action=\"saveMediaConf\">"                                                                                                   \
+                      "<label class=\"input\"><span>Auto Switch (0 No Switch 1 Auto Switch)</span><input type=\"text\"name=\"switchFlag\"value=\"%s\"></label>"          \
+                      "<label class=\"input\"><span>Power Control (0 Low Heat 1 Performance Priority)</span><input type=\"text\"name=\"powerFlag\"value=\"%s\"></label>" \
+                      "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"Save\"></form>"
 
-#define SCREEN_SETTING "<form method=\"GET\" action=\"saveScreenConf\">"                                                                                           \
-                       "<label class=\"input\"><span>功耗控制（0低发热 1性能优先）</span><input type=\"text\"name=\"powerFlag\"value=\"%s\"></label>" \
-                       "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"保存\"></form>"
+#define SCREEN_SETTING "<form method=\"GET\" action=\"saveScreenConf\">"                                                                                                  \
+                       "<label class=\"input\"><span>Power Control (0 Low Heat 1 Performance Priority)</span><input type=\"text\"name=\"powerFlag\"value=\"%s\"></label>" \
+                       "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"Save\"></form>"
 
-#define HEARTBEAT_SETTING "<form method=\"GET\" action=\"saveHeartbeatConf\">"                                                                            \
-                          "<label class=\"input\"><span>Role(0:heart,1:beat)</span><input type=\"text\"name=\"role\"value=\"%s\"></label>"                \
-                          "<label class=\"input\"><span>MQTT ClientID(推荐QQ号)</span><input type=\"text\"name=\"mqtt_client_id\"value=\"%s\"></label>"                    \  
-                          "<label class=\"input\"><span>MQTT SubTopic(推荐对方QQ号)</span><input type=\"text\"name=\"mqtt_subtopic\"value=\"%s\"></label>"                    \  
-                        "<label class=\"input\"><span>MQTT ServerIp</span><input type=\"text\"name=\"mqtt_server\"value=\"%s\"></label>"                    \  
-                        "<label class=\"input\"><span>MQTT 端口号(1883)</span><input type=\"text\"name=\"mqtt_port\"value=\"%s\"></label>"             \
-                        "<label class=\"input\"><span>MQTT 服务用户名(可不填)</span><input type=\"text\"name=\"mqtt_user\"value=\"%s\"></label>"  \
-                        "<label class=\"input\"><span>MQTT 服务密码(可不填)</span><input type=\"text\"name=\"mqtt_password\"value=\"%s\"></label>" \
-                        "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"保存\"></form>"
+#define HEARTBEAT_SETTING "<form method=\"GET\" action=\"saveHeartbeatConf\">"                                                                                                     \
+                          "<label class=\"input\"><span>Role (0: heart, 1: beat)</span><input type=\"text\"name=\"role\"value=\"%s\"></label>"                                     \
+                          "<label class=\"input\"><span>MQTT ClientID (Recommended QQ number)</span><input type=\"text\"name=\"mqtt_client_id\"value=\"%s\"></label>"              \
+                          "<label class=\"input\"><span>MQTT SubTopic (Recommended other party's QQ number)</span><input type=\"text\"name=\"mqtt_subtopic\"value=\"%s\"></label>" \
+                          "<label class=\"input\"><span>MQTT Server IP</span><input type=\"text\"name=\"mqtt_server\"value=\"%s\"></label>"                                        \
+                          "<label class=\"input\"><span>MQTT Port (1883)</span><input type=\"text\"name=\"mqtt_port\"value=\"%s\"></label>"                                        \
+                          "<label class=\"input\"><span>MQTT Service Username (Optional)</span><input type=\"text\"name=\"mqtt_user\"value=\"%s\"></label>"                        \
+                          "<label class=\"input\"><span>MQTT Service Password (Optional)</span><input type=\"text\"name=\"mqtt_password\"value=\"%s\"></label>"                    \
+                          "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"Save\"></form>"
 
-#define ANNIVERSARY_SETTING "<form method=\"GET\" action=\"saveAnniversaryConf\">"                                                      \
-                            "<label class=\"input\"><span>事件0</span><input type=\"text\"name=\"event_name0\"value=\"%s\"></label>"  \
-                            "<label class=\"input\"><span>日期0</span><input type=\"text\"name=\"target_date0\"value=\"%s\"></label>" \
-                            "<label class=\"input\"><span>事件1</span><input type=\"text\"name=\"event_name1\"value=\"%s\"></label>"  \
-                            "<label class=\"input\"><span>日期1</span><input type=\"text\"name=\"target_date1\"value=\"%s\"></label>" \
-                            "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"保存\"></form>"
+#define ANNIVERSARY_SETTING "<form method=\"GET\" action=\"saveAnniversaryConf\">"                                                     \
+                            "<label class=\"input\"><span>Event 0</span><input type=\"text\"name=\"event_name0\"value=\"%s\"></label>" \
+                            "<label class=\"input\"><span>Date 0</span><input type=\"text\"name=\"target_date0\"value=\"%s\"></label>" \
+                            "<label class=\"input\"><span>Event 1</span><input type=\"text\"name=\"event_name1\"value=\"%s\"></label>" \
+                            "<label class=\"input\"><span>Date 1</span><input type=\"text\"name=\"target_date1\"value=\"%s\"></label>" \
+                            "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"Save\"></form>"
 
-#define REMOTR_SENSOR_SETTING "<form method=\"GET\" action=\"savePCResourceConf\">"                                                                                       \
-                              "<label class=\"input\"><span>PC地址</span><input type=\"text\"name=\"pc_ipaddr\"value=\"%s\"></label>"                                   \
-                              "<label class=\"input\"><span>传感器数据更新间隔(ms)</span><input type=\"text\"name=\"sensorUpdataInterval\"value=\"%s\"></label>" \
-                              "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"保存\"></form>"
+#define REMOTR_SENSOR_SETTING "<form method=\"GET\" action=\"savePCResourceConf\">"                                                                                        \
+                              "<label class=\"input\"><span>PC Address</span><input type=\"text\"name=\"pc_ipaddr\"value=\"%s\"></label>"                                  \
+                              "<label class=\"input\"><span>Sensor Data Update Interval (ms)</span><input type=\"text\"name=\"sensorUpdataInterval\"value=\"%s\"></label>" \
+                              "</label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"Save\"></form>"
 
 void init_page_header()
 {
@@ -175,38 +174,38 @@ void init_page_header()
     webpage_header += F("<li><a href='/upload'>Upload</a></li>");
     webpage_header += F("<li><a href='/delete'>Delete</a></li>");
 
-    webpage_header += F("<li><a href='/sys_setting'>系统设置</a></li>");
+    webpage_header += F("<li><a href='/sys_setting'>System Settings</a></li>");
 
-    webpage_header += F("<li><a href='/rgb_setting'>RGB设置</a></li>");
+    webpage_header += F("<li><a href='/rgb_setting'>RGB Settings</a></li>");
 #if APP_WEATHER_USE
-    webpage_header += F("<li><a href='/weather_setting'>新版天气</a></li>");
+    webpage_header += F("<li><a href='/weather_setting'>New Weather</a></li>");
 #endif
 #if APP_WEATHER_OLD_USE
-    webpage_header += F("<li><a href='/weather_old_setting'>旧版天气</a></li>");
+    webpage_header += F("<li><a href='/weather_old_setting'>Old Weather</a></li>");
 #endif
 #if APP_BILIBILI_FANS_USE
-    webpage_header += F("<li><a href='/bili_setting'>B站</a></li>");
+    webpage_header += F("<li><a href='/bili_setting'>Bilibili</a></li>");
 #endif
 #if APP_PICTURE_USE
-    webpage_header += F("<li><a href='/picture_setting'>相册</a></li>");
+    webpage_header += F("<li><a href='/picture_setting'>Album</a></li>");
 #endif
 #if APP_MEDIA_PLAYER_USE
-    webpage_header += F("<li><a href='/media_setting'>媒体播放器</a></li>");
+    webpage_header += F("<li><a href='/media_setting'>Media Player</a></li>");
 #endif
 #if APP_SCREEN_SHARE_USE
-    webpage_header += F("<li><a href='/screen_setting'>屏幕分享</a></li>");
+    webpage_header += F("<li><a href='/screen_setting'>Screen Share</a></li>");
 #endif
 #if APP_HEARTBEAT_USE
-    webpage_header += F("<li><a href='/heartbeat_setting'>心跳</a></li>");
+    webpage_header += F("<li><a href='/heartbeat_setting'>Heartbeat</a></li>");
 #endif
 #if APP_ANNIVERSARY_USE
-    webpage_header += F("<li><a href='/anniversary_setting'>纪念日</a></li>");
+    webpage_header += F("<li><a href='/anniversary_setting'>Anniversary</a></li>");
 #endif
 #if APP_STOCK_MARKET_USE
-    webpage_header += F("<li><a href='/stock_setting'>股票行情</a></li>");
+    webpage_header += F("<li><a href='/stock_setting'>Stock Market</a></li>");
 #endif
 #if APP_PC_RESOURCE_USE
-    webpage_header += F("<li><a href='/pc_resource_setting'>PC资源监控</a></li>");
+    webpage_header += F("<li><a href='/pc_resource_setting'>PC Resource Monitoring</a></li>");
 #endif
     webpage_header += F("</ul>");
 }
@@ -220,9 +219,9 @@ void init_page_footer()
 // All supporting functions from here...
 void HomePage()
 {
-    // 指定 target='_blank' 设置新建页面
+    // Specify target='_blank' to set up a new page
     webpage = F("<a href='https://github.com/ClimbSnail/HoloCubic_AIO' target='_blank'><button>Github</button></a>");
-    webpage += F("<a href='https://space.bilibili.com/344470052?spm_id_from=333.788.b_765f7570696e666f.1' target='_blank'><button>BiliBili教程</button></a>");
+    webpage += F("<a href='https://space.bilibili.com/344470052?spm_id_from=333.788.b_765f7570696e666f.1' target='_blank'><button>BiliBili Tutorial</button></a>");
     Send_HTML(webpage);
 }
 
@@ -240,7 +239,7 @@ void sys_setting()
     char time[32];
     char auto_calibration_mpu[32];
     char auto_start_app[32];
-    // 读取数据
+    // Read data
     app_controller->send_to(SERVER_APP_NAME, "AppCtrl", APP_MESSAGE_READ_CFG,
                             NULL, NULL);
     app_controller->send_to(SERVER_APP_NAME, "AppCtrl", APP_MESSAGE_GET_PARAM,
@@ -266,7 +265,7 @@ void sys_setting()
     app_controller->send_to(SERVER_APP_NAME, "AppCtrl", APP_MESSAGE_GET_PARAM,
                             (void *)"auto_start_app", auto_start_app);
     SysUtilConfig cfg = app_controller->sys_cfg;
-    // 主要为了处理启停MPU自动校准的单选框
+    // Mainly to handle the radio button for enabling/disabling MPU auto calibration
     if (0 == cfg.auto_calibration_mpu)
     {
         sprintf(buf, SYS_SETTING,
@@ -293,7 +292,7 @@ void rgb_setting()
     char min_brightness[32];
     char max_brightness[32];
     char time[32];
-    // 读取数据
+    // Read data
     app_controller->send_to(SERVER_APP_NAME, "AppCtrl", APP_MESSAGE_READ_CFG,
                             NULL, NULL);
     app_controller->send_to(SERVER_APP_NAME, "AppCtrl", APP_MESSAGE_GET_PARAM,
@@ -316,7 +315,7 @@ void weather_setting()
     char tianqi_api_key[40];
     char weatherUpdataInterval[32];
     char timeUpdataInterval[32];
-    // 读取数据
+    // Read data
     app_controller->send_to(SERVER_APP_NAME, "Weather", APP_MESSAGE_READ_CFG,
                             NULL, NULL);
     app_controller->send_to(SERVER_APP_NAME, "Weather", APP_MESSAGE_GET_PARAM,
@@ -346,7 +345,7 @@ void weather_old_setting()
     char weather_key[32];
     char weatherUpdataInterval[32];
     char timeUpdataInterval[32];
-    // 读取数据
+    // Read data
     app_controller->send_to(SERVER_APP_NAME, "Weather Old", APP_MESSAGE_READ_CFG,
                             NULL, NULL);
     app_controller->send_to(SERVER_APP_NAME, "Weather Old", APP_MESSAGE_GET_PARAM,
@@ -374,7 +373,7 @@ void bili_setting()
     char buf[2048];
     char bili_uid[32];
     char updataInterval[32];
-    // 读取数据
+    // Read data
     app_controller->send_to(SERVER_APP_NAME, "Bili", APP_MESSAGE_READ_CFG,
                             NULL, NULL);
     app_controller->send_to(SERVER_APP_NAME, "Bili", APP_MESSAGE_GET_PARAM,
@@ -391,7 +390,7 @@ void stock_setting()
     char buf[2048];
     char bili_uid[32];
     char updataInterval[32];
-    // 读取数据
+    // Read data
     app_controller->send_to(SERVER_APP_NAME, "Stock", APP_MESSAGE_READ_CFG,
                             NULL, NULL);
     app_controller->send_to(SERVER_APP_NAME, "Stock", APP_MESSAGE_GET_PARAM,
@@ -407,7 +406,7 @@ void picture_setting()
 {
     char buf[2048];
     char switchInterval[32];
-    // 读取数据
+    // Read data
     app_controller->send_to(SERVER_APP_NAME, "Picture", APP_MESSAGE_READ_CFG,
                             NULL, NULL);
     app_controller->send_to(SERVER_APP_NAME, "Picture", APP_MESSAGE_GET_PARAM,
@@ -422,7 +421,7 @@ void media_setting()
     char buf[2048];
     char switchFlag[32];
     char powerFlag[32];
-    // 读取数据
+    // Read data
     app_controller->send_to(SERVER_APP_NAME, "Media", APP_MESSAGE_READ_CFG,
                             NULL, NULL);
     app_controller->send_to(SERVER_APP_NAME, "Media", APP_MESSAGE_GET_PARAM,
@@ -438,7 +437,7 @@ void screen_setting()
 {
     char buf[2048];
     char powerFlag[32];
-    // 读取数据
+    // Read data
     app_controller->send_to(SERVER_APP_NAME, "Screen share", APP_MESSAGE_READ_CFG,
                             NULL, NULL);
     app_controller->send_to(SERVER_APP_NAME, "Screen share", APP_MESSAGE_GET_PARAM,
@@ -458,7 +457,7 @@ void heartbeat_setting()
     char port[32];
     char server_user[32];
     char server_password[32];
-    // 读取数据
+    // Read data
     app_controller->send_to(SERVER_APP_NAME, "Heartbeat", APP_MESSAGE_READ_CFG,
                             NULL, NULL);
 
@@ -490,7 +489,7 @@ void anniversary_setting()
     char target_date0[32];
     char event_name1[32];
     char target_date1[32];
-    // 读取数据
+    // Read data
     app_controller->send_to(SERVER_APP_NAME, "Anniversary", APP_MESSAGE_READ_CFG,
                             NULL, NULL);
     app_controller->send_to(SERVER_APP_NAME, "Anniversary", APP_MESSAGE_GET_PARAM,
@@ -511,7 +510,7 @@ void pc_resource_setting()
     char buf[2048];
     char pc_ipaddr[32];
     char sensorUpdataInterval[32];
-    // 读取数据
+    // Read data
     app_controller->send_to(SERVER_APP_NAME, "PC Resource", APP_MESSAGE_READ_CFG,
                             NULL, NULL);
     app_controller->send_to(SERVER_APP_NAME, "PC Resource", APP_MESSAGE_GET_PARAM,
@@ -525,7 +524,7 @@ void pc_resource_setting()
 
 void saveSysConf(void)
 {
-    Send_HTML(F("<h1>设置成功! 退出APP或者继续其他设置.</h1>"));
+    Send_HTML(F("<h1>Settings saved successfully! Exit the APP or continue with other settings.</h1>"));
 
     app_controller->send_to(SERVER_APP_NAME, "AppCtrl",
                             APP_MESSAGE_SET_PARAM,
@@ -559,14 +558,14 @@ void saveSysConf(void)
                             APP_MESSAGE_SET_PARAM,
                             (void *)"auto_start_app",
                             (void *)server.arg("auto_start_app").c_str());
-    // 持久化数据
+    // Persist data
     app_controller->send_to(SERVER_APP_NAME, "AppCtrl", APP_MESSAGE_WRITE_CFG,
                             NULL, NULL);
 }
 
 void saveRgbConf(void)
 {
-    Send_HTML(F("<h1>设置成功! 退出APP或者继续其他设置.</h1>"));
+    Send_HTML(F("<h1>Settings saved successfully! Exit the APP or continue with other settings.</h1>"));
 
     app_controller->send_to(SERVER_APP_NAME, "AppCtrl",
                             APP_MESSAGE_SET_PARAM,
@@ -580,14 +579,14 @@ void saveRgbConf(void)
                             APP_MESSAGE_SET_PARAM,
                             (void *)"time",
                             (void *)server.arg("time").c_str());
-    // 持久化数据
+    // Persist data
     app_controller->send_to(SERVER_APP_NAME, "AppCtrl", APP_MESSAGE_WRITE_CFG,
                             NULL, NULL);
 }
 
 void saveWeatherConf(void)
 {
-    Send_HTML(F("<h1>设置成功! 退出APP或者继续其他设置.</h1>"));
+    Send_HTML(F("<h1>Settings saved successfully! Exit the APP or continue with other settings.</h1>"));
 
     app_controller->send_to(SERVER_APP_NAME, "Weather",
                             APP_MESSAGE_SET_PARAM,
@@ -609,14 +608,14 @@ void saveWeatherConf(void)
                             APP_MESSAGE_SET_PARAM,
                             (void *)"timeUpdataInterval",
                             (void *)server.arg("timeUpdataInterval").c_str());
-    // 持久化数据
+    // Persist data
     app_controller->send_to(SERVER_APP_NAME, "Weather", APP_MESSAGE_WRITE_CFG,
                             NULL, NULL);
 }
 
 void saveWeatherOldConf(void)
 {
-    Send_HTML(F("<h1>设置成功! 退出APP或者继续其他设置.</h1>"));
+    Send_HTML(F("<h1>Settings saved successfully! Exit the APP or continue with other settings.</h1>"));
 
     app_controller->send_to(SERVER_APP_NAME, "Weather Old",
                             APP_MESSAGE_SET_PARAM,
@@ -638,14 +637,14 @@ void saveWeatherOldConf(void)
                             APP_MESSAGE_SET_PARAM,
                             (void *)"timeUpdataInterval",
                             (void *)server.arg("timeUpdataInterval").c_str());
-    // 持久化数据
+    // Persist data
     app_controller->send_to(SERVER_APP_NAME, "Weather Old", APP_MESSAGE_WRITE_CFG,
                             NULL, NULL);
 }
 
 void saveBiliConf(void)
 {
-    Send_HTML(F("<h1>设置成功! 退出APP或者继续其他设置.</h1>"));
+    Send_HTML(F("<h1>Settings saved successfully! Exit the APP or continue with other settings.</h1>"));
     app_controller->send_to(SERVER_APP_NAME, "Bili",
                             APP_MESSAGE_SET_PARAM,
                             (void *)"bili_uid",
@@ -654,14 +653,14 @@ void saveBiliConf(void)
                             APP_MESSAGE_SET_PARAM,
                             (void *)"updataInterval",
                             (void *)server.arg("updataInterval").c_str());
-    // 持久化数据
+    // Persist data
     app_controller->send_to(SERVER_APP_NAME, "Bili", APP_MESSAGE_WRITE_CFG,
                             NULL, NULL);
 }
 
 void saveStockConf(void)
 {
-    Send_HTML(F("<h1>设置成功! 退出APP或者继续其他设置.</h1>"));
+    Send_HTML(F("<h1>Settings saved successfully! Exit the APP or continue with other settings.</h1>"));
     app_controller->send_to(SERVER_APP_NAME, "Stock",
                             APP_MESSAGE_SET_PARAM,
                             (void *)"stock_id",
@@ -670,26 +669,26 @@ void saveStockConf(void)
                             APP_MESSAGE_SET_PARAM,
                             (void *)"updataInterval",
                             (void *)server.arg("updataInterval").c_str());
-    // 持久化数据
+    // Persist data
     app_controller->send_to(SERVER_APP_NAME, "Stock", APP_MESSAGE_WRITE_CFG,
                             NULL, NULL);
 }
 
 void savePictureConf(void)
 {
-    Send_HTML(F("<h1>设置成功! 退出APP或者继续其他设置.</h1>"));
+    Send_HTML(F("<h1>Settings saved successfully! Exit the APP or continue with other settings.</h1>"));
     app_controller->send_to(SERVER_APP_NAME, "Picture",
                             APP_MESSAGE_SET_PARAM,
                             (void *)"switchInterval",
                             (void *)server.arg("switchInterval").c_str());
-    // 持久化数据
+    // Persist data
     app_controller->send_to(SERVER_APP_NAME, "Picture", APP_MESSAGE_WRITE_CFG,
                             NULL, NULL);
 }
 
 void saveMediaConf(void)
 {
-    Send_HTML(F("<h1>设置成功! 退出APP或者继续其他设置.</h1>"));
+    Send_HTML(F("<h1>Settings saved successfully! Exit the APP or continue with other settings.</h1>"));
     app_controller->send_to(SERVER_APP_NAME, "Media",
                             APP_MESSAGE_SET_PARAM,
                             (void *)"switchFlag",
@@ -698,26 +697,26 @@ void saveMediaConf(void)
                             APP_MESSAGE_SET_PARAM,
                             (void *)"powerFlag",
                             (void *)server.arg("powerFlag").c_str());
-    // 持久化数据
+    // Persist data
     app_controller->send_to(SERVER_APP_NAME, "Media", APP_MESSAGE_WRITE_CFG,
                             NULL, NULL);
 }
 
 void saveScreenConf(void)
 {
-    Send_HTML(F("<h1>设置成功! 退出APP或者继续其他设置.</h1>"));
+    Send_HTML(F("<h1>Settings saved successfully! Exit the APP or continue with other settings.</h1>"));
     app_controller->send_to(SERVER_APP_NAME, "Screen share",
                             APP_MESSAGE_SET_PARAM,
                             (void *)"powerFlag",
                             (void *)server.arg("powerFlag").c_str());
-    // 持久化数据
+    // Persist data
     app_controller->send_to(SERVER_APP_NAME, "Screen share", APP_MESSAGE_WRITE_CFG,
                             NULL, NULL);
 }
 
 void saveHeartbeatConf(void)
 {
-    Send_HTML(F("<h1>设置成功! 退出APP或者继续其他设置.</h1>"));
+    Send_HTML(F("<h1>Settings saved successfully! Exit the APP or continue with other settings.</h1>"));
     app_controller->send_to(SERVER_APP_NAME, "Heartbeat",
                             APP_MESSAGE_SET_PARAM,
                             (void *)"role",
@@ -746,14 +745,14 @@ void saveHeartbeatConf(void)
                             APP_MESSAGE_SET_PARAM,
                             (void *)"server_password",
                             (void *)server.arg("mqtt_password").c_str());
-    // 持久化数据
+    // Persist data
     app_controller->send_to(SERVER_APP_NAME, "Heartbeat", APP_MESSAGE_WRITE_CFG,
                             NULL, NULL);
 }
 
 void saveAnniversaryConf(void)
 {
-    Send_HTML(F("<h1>设置成功! 退出APP或者继续其他设置.</h1>"));
+    Send_HTML(F("<h1>Settings saved successfully! Exit the APP or continue with other settings.</h1>"));
     app_controller->send_to(SERVER_APP_NAME, "Anniversary",
                             APP_MESSAGE_SET_PARAM,
                             (void *)"event_name0",
@@ -770,14 +769,14 @@ void saveAnniversaryConf(void)
                             APP_MESSAGE_SET_PARAM,
                             (void *)"target_date1",
                             (void *)server.arg("target_date1").c_str());
-    // 持久化数据
+    // Persist data
     app_controller->send_to(SERVER_APP_NAME, "Anniversary", APP_MESSAGE_WRITE_CFG,
                             NULL, NULL);
 }
 
 void savePCResourceConf(void)
 {
-    Send_HTML(F("<h1>设置成功! 退出APP或者继续其他设置.</h1>"));
+    Send_HTML(F("<h1>Settings saved successfully! Exit the APP or continue with other settings.</h1>"));
     app_controller->send_to(SERVER_APP_NAME, "PC Resource",
                             APP_MESSAGE_SET_PARAM,
                             (void *)"pc_ipaddr",
@@ -786,7 +785,7 @@ void savePCResourceConf(void)
                             APP_MESSAGE_SET_PARAM,
                             (void *)"sensorUpdataInterval",
                             (void *)server.arg("sensorUpdataInterval").c_str());
-    // 持久化数据
+    // Persist data
     app_controller->send_to(SERVER_APP_NAME, "PC Resource", APP_MESSAGE_WRITE_CFG,
                             NULL, NULL);
 }
@@ -796,8 +795,8 @@ void File_Delete()
     Send_HTML(
         F("<h3>Enter filename to delete</h3>"
           "<form action='/delete_result' method='post'>"
-          "<input type='text' name='delete_filepath' placeHolder='绝对路径 /image/...'><br>"
-          "</label><input class=\"btn\" type=\"submit\" name=\"Submie\" value=\"确认删除\"></form>"
+          "<input type='text' name='delete_filepath' placeHolder='Absolute path /image/...'><br>"
+          "</label><input class=\"btn\" type=\"submit\" name=\"Submie\" value=\"Confirm Delete\"></form>"
           "<a href='/'>[Back]</a>"));
 }
 
@@ -807,12 +806,12 @@ void delete_result(void)
     boolean ret = tf.deleteFile(del_file);
     if (ret)
     {
-        webpage = "<h3>Delete succ!</h3><a href='/delete'>[Back]</a>";
+        webpage = "<h3>Delete success!</h3><a href='/delete'>[Back]</a>";
         tf.listDir("/image", 250);
     }
     else
     {
-        webpage = "<h3>Delete fail! Please check up file path.</h3><a href='/delete'>[Back]</a>";
+        webpage = "<h3>Delete failed! Please check the file path.</h3><a href='/delete'>[Back]</a>";
     }
     tf.listDir("/image", 250);
     Send_HTML(webpage);
@@ -872,7 +871,7 @@ void handleFileUpload()
     if (uploadFileStream.status == UPLOAD_FILE_START)
     {
         // String filename = uploadFileStream.filename;
-        // if (!filename.startsWith("/image"))
+        // if (!filename startsWith("/image"))
         filename = "/image/" + filename;
         Serial.print(F("Upload File Name: "));
         Serial.println(filename);
